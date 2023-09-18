@@ -18,7 +18,29 @@ public class BFSPlanner implements Planner {
 
 
     public List<Action> plan() {
-        return 
+        Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
+        Map<Map<Variable, Object>, Action> plan = new HashMap<>();
+        Queue<Map<Variable, Object>> queue = new LinkedList<>();
+        queue.add(initialState);
+        father.put(initialState, null);
+        plan.put(initialState, null);
+        while (!queue.isEmpty()) {
+            Map<Variable, Object> current = queue.poll();
+            if (satisfies(current, goal)) {
+                return getBFSPlan(father, plan, current);
+            }
+            for (Action action : actions) {
+                if (isApplicable(action, current)) {
+                    Map<Variable, Object> next = apply(action, current);
+                    if (!father.containsKey(next)) {
+                        father.put(next, current);
+                        plan.put(next, action);
+                        queue.add(next);
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private boolean satisfies(Map<Variable, Object> state, Goal goal) {
