@@ -1,48 +1,22 @@
 package planning;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import modelling.Variable;
 
-public class DijkstraPlanner implements Planner {
+public class AStarPlanner implements Planner {
 
-    private Set<Map<Variable, Object>> not_visited;
-    private Map<Map<Variable, Object>, Map<Variable, Object>> father;
-    // ditance 
-    private Map<Map<Variable, Object>, Integer> distance;
-
-    public DijkstraPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal) {
-        this.not_visited = new HashSet<>();
-        this.not_visited.add(initialState);
-        this.father = new HashMap<>();
-        this.father.put(initialState, null);
-        this.distance = new HashMap<>();
-        this.distance.put(initialState, 0);
+    // constructeur prend en arguments, dans cet ordre, un état initial, un ensemble d’actions, un but (des mêmes types que les autres classes de planificateurs), et une heuristique (de type Heuristic).
+    public AStarPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal, Heuristic heuristic) {
+        
     }
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     @Override
     public List<Action> plan() {
         // TODO Auto-generated method stub
@@ -66,8 +40,5 @@ public class DijkstraPlanner implements Planner {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getGoal'");
     }
-
-
     
-
 }
