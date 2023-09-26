@@ -9,12 +9,23 @@ public class BFSPlanner implements Planner {
     private Set<Action> actions;
     private Goal goal;
 
+    /**
+     * Constructor pour BFSPlanner
+     * @param initialState  Etat inital du probleme de planification
+     * @param actions       Ensemble des actions possibles
+     * @param goal          Objectif a atteindre
+     */
     public BFSPlanner(Map<Variable, Object> initialState, Set<Action> actions, Goal goal) {
         this.initialState = initialState;
         this.actions = actions;
         this.goal = goal;
     }
 
+    /**
+     * On planifie une séquence d'actions pour atteindre l'objectif à partir de l'état initial
+     * 
+     * @return Une liste d'actions représentant le plan pour atteindre l'objectif ou null si aucun plan n'est trouvé (pas de solution   )
+     */
     public List<Action> plan() {
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
