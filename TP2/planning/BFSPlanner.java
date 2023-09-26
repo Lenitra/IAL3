@@ -1,7 +1,6 @@
-
 package planning;
-import java.util.*;
 
+import java.util.*;
 import modelling.Variable;
 
 public class BFSPlanner implements Planner {
@@ -16,26 +15,27 @@ public class BFSPlanner implements Planner {
         this.goal = goal;
     }
 
-
     public List<Action> plan() {
         Map<Map<Variable, Object>, Map<Variable, Object>> father = new HashMap<>();
         Map<Map<Variable, Object>, Action> plan = new HashMap<>();
-        Queue<Map<Variable, Object>> queue = new LinkedList<>();
-        queue.add(initialState);
+        ArrayList<Map<Variable, Object>> closed = new ArrayList<>();
+        Queue<Map<Variable, Object>> open = new LinkedList<>();
+        open.add(initialState);
         father.put(initialState, null);
         plan.put(initialState, null);
-        while (!queue.isEmpty()) {
-            Map<Variable, Object> current = queue.poll();
-            if (satisfies(current, goal)) {
-                return getBFSPlan(father, plan, current);
+        while (!open.isEmpty()) {
+            Map<Variable, Object> instantiation = open.poll();
+            closed.add(instantiation);
+            if (satisfies(instantiation, goal)) {
+                return getBFSPlan(father, plan, instantiation);
             }
             for (Action action : actions) {
-                if (isApplicable(action, current)) {
-                    Map<Variable, Object> next = apply(action, current);
+                if (isApplicable(action, instantiation)) {
+                    Map<Variable, Object> next = apply(action, instantiation);
                     if (!father.containsKey(next)) {
-                        father.put(next, current);
+                        father.put(next, instantiation);
                         plan.put(next, action);
-                        queue.add(next);
+                        open.add(next);
                     }
                 }
             }
@@ -55,7 +55,7 @@ public class BFSPlanner implements Planner {
         return action.successor(state);
     }
 
-    private List<Action> getBFSPlan(Map<Map<Variable, Object>, Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> current) {
+    public List<Action> getBFSPlan(Map<Map<Variable, Object>, Map<Variable, Object>> father, Map<Map<Variable, Object>, Action> plan, Map<Variable, Object> current) {
         List<Action> result = new ArrayList<>();
         while (current != null) {
             Action action = plan.get(current);
@@ -69,19 +69,16 @@ public class BFSPlanner implements Planner {
 
     @Override
     public Map<Variable, Object> getInitialState() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getInitialState'");
+       return this.initialState;
     }
 
     @Override
     public Set<Action> getActions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getActions'");
+        return this.actions;
     }
 
     @Override
     public Goal getGoal() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGoal'");
+        return this.goal;
     }
 }

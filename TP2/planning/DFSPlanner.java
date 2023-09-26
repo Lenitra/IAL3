@@ -1,7 +1,6 @@
 package planning;
 
 import java.util.*;
-
 import modelling.Variable;
 
 public class DFSPlanner implements Planner {
@@ -20,7 +19,7 @@ public class DFSPlanner implements Planner {
 
     @Override
     public List<Action> plan() {
-        visited.clear(); // Assurez-vous de réinitialiser la liste à chaque appel
+        visited.clear();
         return plan(initialState, new ArrayList<>());
     }
 
@@ -29,13 +28,12 @@ public class DFSPlanner implements Planner {
             return plan;
         }
 
-        visited.add(state); // Ajoutez l'état actuel à la liste des états visités
+        visited.add(state);
 
         for (Action action : actions) {
             if (action.isApplicable(state)) {
                 Map<Variable, Object> successor = action.successor(state);
 
-                // Vérifiez si l'état suivant a déjà été visité
                 if (!visited.contains(successor)) {
                     List<Action> newPlan = new ArrayList<>(plan);
                     newPlan.add(action);

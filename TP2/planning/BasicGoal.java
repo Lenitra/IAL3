@@ -1,9 +1,5 @@
 package planning;
 
-//Créer une classe nommée BasicGoal implémentant l’interface Goal, pour représenter les
-// buts basiques. Munir cette classe d’un constructeur prenant en argument une instanciation partielle des
-// variables (de type Map<Variable, Object>).
-
 import java.util.Map;
 import modelling.Variable;
 
@@ -24,8 +20,6 @@ public class BasicGoal implements Goal {
         }
         return true;
     }
-
-    //add a successor method to Goal
 
     public Map<Variable, Object> successor(Map<Variable, Object> state) {
         Map<Variable, Object> newState = state;

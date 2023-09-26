@@ -17,7 +17,7 @@ public class DijkstraPlanner implements Planner {
     private Goal goal;
     private int nombresNoeuds;
 
-        /**
+    /**
      * Construit un DijkstraPlanner avec un état initial, un ensemble d'actions et l'objectif à atteindre
      * 
      * @param initialState L'état initial du problème
