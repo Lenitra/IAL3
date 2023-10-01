@@ -1,18 +1,10 @@
 package modelling;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-// Écrire une classe nommée Implication, pour représenter les contraintes de la forme (v1 ∈
-// S1) → (v2 ∈ S2), où v1 et v2 sont des variables, et S1 et S2 des sous-ensembles de leurs domaines
-// respectifs. Une telle contrainte est satisfaite si, dès lors qu’une valeur de S1 est affectée à v1, une valeur
-// de S2 est affectée à v2 (et elle est satisfaite si ce n’est pas une valeur de S1 qui est affectée à v1, quelle
-// que soit la valeur affectée à v2). Munir la classe d’un constructeur prenant en arguments, dans cet ordre :
-// une instance de Variable (pour v1), une instance de Set<Object> (pour S1), une instance de Variable
-// pour v2, et une instance de Set<Object> pour S2. Faire implémenter l’interface Constraint à la classe
-// Implication.
-
-
+// Cette classe représente une contrainte d'implication entre deux variables
 public class Implication implements Constraint {
 
     private Variable v1;
@@ -20,6 +12,13 @@ public class Implication implements Constraint {
     private Set<Object> S1;
     private Set<Object> S2;
 
+    /**
+     * Constructeur de la classe Implication
+     * @param v1    la première variable
+     * @param S1    l'ensemble des valeurs de la première variable
+     * @param v2    la deuxième variable
+     * @param S2    l'ensemble des valeurs de la deuxième variable
+     */
     public Implication(Variable v1, Set<Object> S1, Variable v2, Set<Object> S2) {
         this.v1 = v1;
         this.v2 = v2;
@@ -27,6 +26,10 @@ public class Implication implements Constraint {
         this.S2 = S2;
     }
 
+    /**
+     * Recupere l'ensemble des variables sur lesquelles porte la contrainte
+     * @return Un ensemble contenant v1 et v2
+     */
     @Override
     public Set<Variable> getScope() {
         Set<Variable> scope = new HashSet<>();
@@ -35,15 +38,24 @@ public class Implication implements Constraint {
         return scope;
     }
 
+    /**
+     * Vérifie si l'instantiation donnée satisfait cette contrainte
+     * @param instantiation une instantiation des variables v1 et v2
+     * @return true si l'instantiation satisfait la contrainte, false sinon
+     * @throws IllegalArgumentException si l'instantiation ne contient pas toutes les variables nécessaires
+     */
     @Override
     public boolean isSatisfiedBy(Map<Variable, Object> instantiation) {
         if (!instantiation.containsKey(v1) || !instantiation.containsKey(v2)) {
             throw new IllegalArgumentException("L'instantiation ne contient pas toutes les variables nécessaires.");
         }
 
+        // On vérifie que la première variable est bien dans S1
         if (S1.contains(instantiation.get(v1))) {
+            // On vérifie que la deuxième variable est bien dans S2
             return S2.contains(instantiation.get(v2));
         }
+        // Si la première variable n'est pas dans S1, on renvoie forcement true
         return true;
     }
 
