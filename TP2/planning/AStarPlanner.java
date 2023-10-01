@@ -8,6 +8,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import modelling.Variable;
 
+//Implémentation d'un planificateur basé sur l'algorithme A*
 public class AStarPlanner implements Planner {
     
     private Map<Variable, Object> initialState;
@@ -55,7 +56,7 @@ public class AStarPlanner implements Planner {
 
         // tant que la liste des ouverts n'est pas vide 
         while (!open.isEmpty()) {
-            // on récupère la valeur la plus petite de la liste des ouverts
+            // on récupère la premiere valeur de la liste des ouverts
             Map<Variable, Object> currentState = open.poll();
             // on vérifie si l'état actuel satisfait l'objectif
             if (goal.isSatisfiedBy(currentState)) {

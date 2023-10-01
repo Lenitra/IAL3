@@ -8,6 +8,7 @@ import java.util.Set;
 
 import modelling.Variable;
 
+//Implémentation d'un planificateur de recherche en profondeur (DFS)
 public class DFSPlanner implements Planner {
 
     private Map<Variable, Object> initialState;
@@ -16,7 +17,7 @@ public class DFSPlanner implements Planner {
     private Set<Map<Variable, Object>> visited;
 
     /**
-     * Constructor pour DFSPlanner
+     * Constructeur pour DFSPlanner
      * @param initialState  Etat inital du probleme de planification
      * @param actions       Ensemble des actions possibles
      * @param goal          Objectif a atteindre

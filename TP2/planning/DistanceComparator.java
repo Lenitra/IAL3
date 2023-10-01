@@ -5,10 +5,15 @@ import java.util.Comparator;
 
 import modelling.Variable;
 
+// Implémentation d'un comparateur de distance
 public class DistanceComparator implements Comparator<Map<Variable, Object>> {
 
     private Map<Map<Variable, Object>, Float> distance;
 
+    /**
+     * Constructeur d'un comparateur de distance
+     * @param distance La distance à utiliser pour comparer les états
+     */
     public DistanceComparator(Map<Map<Variable, Object>, Float> distance) {
         this.distance = distance;
     }

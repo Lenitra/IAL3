@@ -10,6 +10,7 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 import modelling.Variable;
 
+//Implémentation d'un planificateur basé sur l'algorithme de Dijkstra
 public class DijkstraPlanner implements Planner {
 
     private Map<Variable, Object> initialState;
