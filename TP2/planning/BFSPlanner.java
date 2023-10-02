@@ -15,6 +15,8 @@ public class BFSPlanner implements Planner {
     private Map<Variable, Object> initialState;
     private Set<Action> actions;
     private Goal goal;
+    private int nombresNoeuds;
+
 
     /**
      * Constructeur pour BFSPlanner
@@ -61,7 +63,7 @@ public class BFSPlanner implements Planner {
                 if (isApplicable(action, instantiation)) {
                     // on récupère l'état suivant
                     Map<Variable, Object> next = apply(action, instantiation);
-
+                    
                     // si l'état suivant n'a pas déjà été visité
                     if (!father.containsKey(next)) {
                         // on l'ajoute à la liste des ouverts
@@ -71,6 +73,7 @@ public class BFSPlanner implements Planner {
                     }
                 }
             }
+            nombresNoeuds++;
         }
         return null;
     }
@@ -122,6 +125,11 @@ public class BFSPlanner implements Planner {
             current = father.get(current);
         }
         return result;
+    }
+
+    @Override
+    public int getNombresNoeuds() {
+        return nombresNoeuds;
     }
 
     @Override

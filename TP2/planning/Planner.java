@@ -35,4 +35,10 @@ public interface Planner {
      * @return Un ensemble d'actions possibles que le planificateur peut utiliser
      */
     public Set<Action> getActions();
+
+    /**
+     * Recupere le nombre de noeuds explorés par le planificateur
+     * @return Le nombre de noeuds explorés par le planificateur
+     */
+    public int getNombresNoeuds();
 }

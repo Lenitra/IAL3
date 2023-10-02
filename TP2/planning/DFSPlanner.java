@@ -76,6 +76,11 @@ public class DFSPlanner implements Planner {
         return null;
     }
 
+    public int getNombresNoeuds()
+    {
+        return visited.size();
+    }
+
     @Override
     public Goal getGoal() {
         return goal;
