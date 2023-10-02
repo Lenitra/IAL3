@@ -2,7 +2,6 @@ package planning;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 import modelling.*;
 
@@ -38,27 +37,13 @@ public class Main {
         initialState.put(B, true);
         initialState.put(C, true);
         initialState.put(D, true);
-        
-        // contraintes
-        // HashSet<Constraint> constraints = new HashSet<>();
-        // constraints.add(new DifferenceConstraint(A, B));
-        // constraints.add(new DifferenceConstraint(A, C));
-        // constraints.add(new DifferenceConstraint(B, C));
-        // constraints.add(new DifferenceConstraint(C, D));
 
 
 
         // Set actions
         HashSet<Action> actions = new HashSet<>();
         
-        
-        //     public BasicAction(Map<Variable, Object> precondition, Map<Variable, Object> effect, int cout) {
-                // this.precondition = precondition;
-                // this.effect = effect;
-                // this.cout = cout;
-    
-        
-        // actions.add(new BasicAction(precondition, effect, 1));
+
         actions.add(new BasicAction(new HashMap<Variable, Object>() {{ put(A, true);}}, new HashMap<Variable, Object>() {{ put(A, false);}}, 1));
         actions.add(new BasicAction(new HashMap<Variable, Object>() {{ put(A, false);}}, new HashMap<Variable, Object>() {{ put(A, true);}}, 1));
         actions.add(new BasicAction(new HashMap<Variable, Object>() {{ put(B, true);}}, new HashMap<Variable, Object>() {{ put(B, false);}}, 1));
@@ -70,21 +55,28 @@ public class Main {
 
 
         // Set goal
-        Goal goal = new BasicGoal(new HashMap<Variable, Object>() {{ put(D, false); }});
+        Goal goal = new BasicGoal(new HashMap<Variable, Object>() {{ put(D, false); } { put(C, false);} { put(B, true); } { put(A, false); }});
 
 
-        // Apply the algorithm of BSP
+        System.out.println("BFS");
         Planner planner = new BFSPlanner(initialState, actions, goal);
         planner.plan();
-        System.out.println(planner.getNombresNoeuds());
-
-        planner = new DFSPlanner(initialState, actions, goal);
-        planner.plan();
+        System.out.print("Nombre de noeuds explorés : ");
         System.out.println(planner.getNombresNoeuds());
         
+        
+        System.out.println("DFS");
+        planner = new DFSPlanner(initialState, actions, goal);
+        planner.plan();
+        System.out.print("Nombre de noeuds explorés : ");
+        System.out.println(planner.getNombresNoeuds());
+        
+        System.out.println("Dijkstra");
         planner = new DijkstraPlanner(initialState, actions, goal);
         planner.plan();
+        System.out.print("Nombre de noeuds explorés : ");
         System.out.println(planner.getNombresNoeuds());
+
 
     }
 }
