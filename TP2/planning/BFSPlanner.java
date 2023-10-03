@@ -16,6 +16,7 @@ public class BFSPlanner implements Planner {
     private Set<Action> actions;
     private Goal goal;
     private int nombresNoeuds;
+    private boolean sonde = true;
 
 
     /**
@@ -73,7 +74,9 @@ public class BFSPlanner implements Planner {
                     }
                 }
             }
-            nombresNoeuds++;
+            if (sonde){
+                nombresNoeuds++;
+            }
         }
         return null;
     }
@@ -127,6 +130,11 @@ public class BFSPlanner implements Planner {
         return result;
     }
 
+    public void toggleSondage() {
+        // Permet de désactiver le sondage
+        sonde = !sonde;
+    }
+    
     @Override
     public int getNombresNoeuds() {
         return nombresNoeuds;

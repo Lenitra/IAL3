@@ -2,6 +2,7 @@ package planning;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 import modelling.*;
 
@@ -76,6 +77,7 @@ public class Main {
         planner.plan();
         System.out.print("Nombre de noeuds explorés : ");
         System.out.println(planner.getNombresNoeuds());
+
 
 
     }

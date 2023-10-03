@@ -17,6 +17,7 @@ public class DijkstraPlanner implements Planner {
     private Set<Action> actions;
     private Goal goal;
     private int nombresNoeuds;
+    private boolean sonde = true;
 
     /**
      * Construit un DijkstraPlanner avec un état initial, un ensemble d'actions et l'objectif à atteindre
@@ -80,7 +81,9 @@ public class DijkstraPlanner implements Planner {
                         father.put(nextState, currentState);
                         plan.put(nextState, action);
                         open.add(nextState);
-                        nombresNoeuds++;
+                        if (sonde){
+                            nombresNoeuds++;
+                        }
                     }
                 }
             }
@@ -148,6 +151,11 @@ public class DijkstraPlanner implements Planner {
     public Goal getGoal() {
         // Retourne l'état objectif que le planificateur vise à atteindre
         return goal;
+    }
+
+    public void toggleSondage() {
+        // Permet de désactiver le sondage
+        sonde = !sonde;
     }
 
     /**

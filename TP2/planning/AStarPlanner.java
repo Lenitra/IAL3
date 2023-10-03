@@ -17,6 +17,7 @@ public class AStarPlanner implements Planner {
     private Heuristic heuristic;
     private BFSPlanner bfs = new BFSPlanner(initialState, actions, goal);
     private int nombresNoeuds;
+    private boolean sonde = true;
     
     /**
      * Construit un AStarPlanner avec un état initial, un ensemble d'actions, l'objectif à atteindre et la fonction heuristique
@@ -84,7 +85,9 @@ public class AStarPlanner implements Planner {
                         plan.put(nextState, action);
                         // on ajoute l'état suivant à la liste des ouverts
                         open.add(nextState);
-                        nombresNoeuds++;
+                        if (sonde){
+                            nombresNoeuds++;
+                        }
                     }
                 }
             }
@@ -114,6 +117,12 @@ public class AStarPlanner implements Planner {
     public Goal getGoal() {
         // Retourne l'état objectif que le planificateur vise à atteindre
         return goal;
+    }
+
+
+    public void toggleSondage() {
+        // Permet de désactiver le sondage
+        sonde = !sonde;
     }
 
     /**
