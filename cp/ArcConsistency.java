@@ -3,6 +3,7 @@ package cp;
 import modelling.Constraint;
 import modelling.Variable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +40,7 @@ public class ArcConsistency {
                     }
                 }
             }
-            
+
             for (Object obj : tmp) {
             	domains.get(var).remove(obj);
             }
@@ -62,34 +63,65 @@ public class ArcConsistency {
 
 
 
-    // public Boolean revise(Variable x_i, Variable x_j) {
-    //     // remove from the domain of x_i any value that does not satisfy the constraint between x_i and x_j
-    //     // return true if the domain of x_i has changed, false otherwise
-    //     boolean changed = false;
-    //     for (Object value : x_i.getDomain()) {
-    //         boolean satisfied = false;
-    //         for (Object value2 : x_j.getDomain()) {
-    //             satisfied = satisfied || isSatisfiedWith(x_i, value, x_j, value2);
-    //         }
-    //         if (!satisfied) {
-    //             x_i.removeValueFromDomain(value);
-    //             changed = true;
-    //         }
-    //     }
-    //     return changed;
-    // }
+    public boolean revise(Variable v1, Set<Object> d1, Variable v2, Set<Object> d2) {
+        boolean del = false;
 
-    // public Boolean AC1() {
-    //     // for every binary constraint (x_i, x_j), remove from the domain of x_i any value that does not satisfy the constraint between x_i and x_j
-    //     // return true if at least one domain has changed, false otherwise
-    //     boolean changed = false;
-    //     for (Constraint c : constraints) {
-    //         if (c.getScope().size() == 2) {
-    //             changed = changed || revise(c.getScope().get(0), c.getScope().get(1));
-    //         }
-    //     }
-    //     return changed;
-        
-    // }
+        // Créez une copie de d1 pour itérer et supprimer les valeurs
+        Set<Object> d1Tmp = new HashSet<>(d1);
+
+        for (Object value1 : d1Tmp) {
+            boolean viable = false;
+
+            for (Object value2 : d2) {
+                boolean toutSatisfait = true;
+
+                // Vérifiez si les contraintes entre v1 et v2 sont satisfaites
+                for (Constraint constraint : constraints) {
+                    if (constraint.getScope().contains(v1) && constraint.getScope().contains(v2)) {
+                        Map<Variable, Object> assignment = new HashMap<>();
+                        assignment.put(v1, value1);
+                        assignment.put(v2, value2);
+
+                        if (!constraint.isSatisfiedBy(assignment)) {
+                            toutSatisfait = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (toutSatisfait) {
+                    viable = true;
+                    break;
+                }
+            }
+
+            if (!viable) {
+                // Supprimer value1 de d1
+                d1.remove(value1);
+                del = true;
+            }
+        }
+
+        return del;
+    }
+
+    public boolean ac1 (Map<Variable, Set<Object>> domains) {
+        boolean del = false;
+
+        // Créez une copie de domains pour itérer et supprimer les valeurs
+        Map<Variable, Set<Object>> domainsTmp = new HashMap<>(domains);
+
+        for (Variable v1 : domainsTmp.keySet()) {
+            for (Variable v2 : domainsTmp.keySet()) {
+                if (v1 != v2) {
+                    if (revise(v1, domains.get(v1), v2, domains.get(v2))) {
+                        del = true;
+                    }
+                }
+            }
+        }
+
+        return del;
+    }
 
 }
