@@ -105,23 +105,41 @@ public class ArcConsistency {
         return del;
     }
 
-    public boolean ac1 (Map<Variable, Set<Object>> domains) {
-        boolean del = false;
 
-        // Créez une copie de domains pour itérer et supprimer les valeurs
-        Map<Variable, Set<Object>> domainsTmp = new HashMap<>(domains);
+    
 
-        for (Variable v1 : domainsTmp.keySet()) {
-            for (Variable v2 : domainsTmp.keySet()) {
-                if (v1 != v2) {
-                    if (revise(v1, domains.get(v1), v2, domains.get(v2))) {
-                        del = true;
+    public boolean ac1(Map<Variable, Set<Object>> domains) {
+        if (!enforceNodeConsistency(domains)) {
+            return false;
+        }
+
+        boolean change = false;
+
+        do {
+            change = false;
+    
+            // Pour chaque paire de variables (v1, v2) dans le domaine
+            for (Variable v1 : domains.keySet()) {
+                for (Variable v2 : domains.keySet()) {
+                    if (v1 != v2) {
+                        if (revise(v1, domains.get(v1), v2, domains.get(v2))) {
+                            change = true;
+                        }
                     }
                 }
             }
+        } while (change);
+    
+
+        for (Variable var : domains.keySet()) {
+            if (domains.get(var).isEmpty()) {
+                return false;
+            }
         }
 
-        return del;
+        return true;
     }
+    
+
 
 }
