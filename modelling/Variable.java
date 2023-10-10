@@ -59,5 +59,8 @@ public class Variable {
         return this.name.hashCode();
     }
 
+    public void removeValueFromDomain(Object value) {
+        this.domain.remove(value);
+    }
 
 }

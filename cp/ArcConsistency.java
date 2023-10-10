@@ -33,18 +33,24 @@ public class ArcConsistency {
     public Boolean enforceNodeConsistency(Map<Variable, Set<Object>> domains) {
         // remove from the domain of x_i any value that does not satisfy the constraint between x_i and x_j
         // return true if the domain of x_i has changed, false otherwise
-        boolean changed = false;
         for (Constraint c : constraints) {
             if (c.getScope().size() == 1) {
-                Variable x_i = c.getScope().get(0);
+                // Variable x_i = c.getScope().get(0);
+                Variable x_i = c.getScope().iterator().next();
                 for (Object value : x_i.getDomain()) {
-                    if (!c.isSatisfiedWith(x_i, value)) {
+                    if (!c.isSatisfiedBy(Map.of(x_i, value))) {
                         x_i.removeValueFromDomain(value);
-                        changed = true;
                     }
                 }
             }
         }
+        for (Variable x_i : domains.keySet()) {
+            if (x_i.getDomain().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 
 
