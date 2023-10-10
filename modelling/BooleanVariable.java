@@ -10,7 +10,7 @@ public class BooleanVariable extends Variable {
      */
     public BooleanVariable(String name) {
         //Appel du constructeur de la classe Variable avec un domaine de valeurs booléennes
-        super(name, new HashSet<>() {{ add(true); add(false); }});
+        super(name, new HashSet<Object>() {{ add(true); add(false); }});
     }
 
 }
