@@ -6,28 +6,29 @@ import modelling.Constraint;
 import modelling.Variable;
 
 
-
+/**
+ * Classe héritant de AbstractSolver qui analyse un solveur capable de revenir en arrière
+ * en testant les ensembles des affectations partielles possibles.
+ */
 public class BacktrackSolver extends AbstractSolver {
-    Set<Variable> variables;
-    Set<Constraint> constraints;
 
-
+    /**
+     * Constructeur de la classe BacktrackSolver
+     * 
+     * @param variables ensemble de variables 
+     * @param constraints ensemble de contraintes
+     */
     public BacktrackSolver(Set<Variable> variables, Set<Constraint> constraints) {
         super(variables, constraints);
-        this.variables = variables;
-        this.constraints = constraints;
     }
 
-
-
-    // Pour la définition de la méthode solve, on pourra faire appel à une seconde méthode, récursive, qui prend en argument une solution partielle et une liste de variables non instanciées, et retourne elle-même une solution étendant la solution partielle, ou null s’il n’y en a pas.
-
+    /**
+     * Methode qui fait appel à la methode récursive backtrack et retourne une solution si elle existe
+     */
     @Override
     public Map<Variable, Object> solve() {
-        List<Variable> varList = new ArrayList<>(variables);
-        return backtrack(new HashMap<>(), varList);
+        return backtrack(new HashMap<>(), new ArrayList<>(variables));
     }
-
 
     /**
      * Methode recursive qui satisfait des contraintes en fonction des variables et des contraintes du probleme

@@ -1,5 +1,7 @@
 package cp;
 
+import java.util.HashMap;
+
 import cptests.AbstractSolverTests;
 import cptests.ArcConsistencyTests;
 import cptests.BacktrackSolverTests;
@@ -8,9 +10,25 @@ import cptests.HeuristicMACSolverTests;
 import cptests.MACSolverTests;
 import cptests.NbConstraintsVariableHeuristicTests;
 import cptests.RandomValueHeuristicTests;
+import modelling.BooleanVariable;
+import modelling.Variable;
 
 public class Main {
     public static void main(String[] args) {
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
         boolean ok = true;
         ok = ok && AbstractSolverTests.testIsConsistent();
         ok = ok && BacktrackSolverTests.testSolve();
