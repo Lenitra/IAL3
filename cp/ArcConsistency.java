@@ -3,6 +3,7 @@ package cp;
 import modelling.Constraint;
 import modelling.Variable;
 
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,38 +24,36 @@ public class ArcConsistency {
     }
 
 
-    // méthode nommée enforceNodeConsistency,
-    // prenant en
-    // argument un
-    // ensemble de
 
-    // domaines (de type Map<Variable, Set<Object»). La méthode doit supprimer, en place, les valeurs v des domaines pour lesquelles il existe une contrainte unaire non satisfaite par v. Elle doit par ailleurs retourner false si au moins un domaine a été vidé ( true sinon)
+    public boolean enforceNodeConsistency(Map<Variable, Set<Object>> domains) {
+        
+        Set<Object> tmp = new HashSet<Object>(); // on créé un set qui va contenir les valeurs qui ne satisfont pas les contraintes
 
-    public Boolean enforceNodeConsistency(Map<Variable, Set<Object>> domains) {
-        // remove from the domain of x_i any value that does not satisfy the constraint between x_i and x_j
-        // return true if the domain of x_i has changed, false otherwise
-        for (Constraint c : constraints) {
-            if (c.getScope().size() == 1) {
-                // Variable x_i = c.getScope().get(0);
-                Variable x_i = c.getScope().iterator().next();
-                for (Object value : x_i.getDomain()) {
-                    if (!c.isSatisfiedBy(Map.of(x_i, value))) {
-                        x_i.removeValueFromDomain(value);
+        for (Variable var : domains.keySet()) {
+            for (Object value : domains.get(var)) {
+                for (Constraint constraint : constraints) {
+                    if (constraint.getScope().size() == 1 && constraint.getScope().contains(var)) {
+                        if (!constraint.isSatisfiedBy(Map.of(var, value))) {
+                            tmp.add(value);
+                        }
                     }
                 }
             }
+            
+            for (Object obj : tmp) {
+            	domains.get(var).remove(obj);
+            }
+            tmp = new HashSet<Object>();
         }
-        for (Variable x_i : domains.keySet()) {
-            if (x_i.getDomain().isEmpty()) {
+    
+        for (Variable var : domains.keySet()) {
+            if (domains.get(var).isEmpty()) {
                 return false;
             }
         }
+
         return true;
     }
-
-
-
-
 
 
 
