@@ -1,7 +1,8 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "TP2/lib/planningtests.jar",
-        "TP1/lib/modellingtests.jar"
+        "libs/cptests.jar",
+        "libs/modellingtests.jar",
+        "libs/planningtests.jar"
     ]
 }
