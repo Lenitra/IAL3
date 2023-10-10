@@ -20,6 +20,8 @@ public class BacktrackSolver extends AbstractSolver {
 
 
 
+    // Pour la définition de la méthode solve, on pourra faire appel à une seconde méthode, récursive, qui prend en argument une solution partielle et une liste de variables non instanciées, et retourne elle-même une solution étendant la solution partielle, ou null s’il n’y en a pas.
+
     @Override
     public Map<Variable, Object> solve() {
         List<Variable> varList = new ArrayList<>(variables);
@@ -27,6 +29,16 @@ public class BacktrackSolver extends AbstractSolver {
     }
 
 
+    /**
+     * Methode recursive qui satisfait des contraintes en fonction des variables et des contraintes du probleme
+     * 
+     * 
+     * @param partialAssignment une affectation partielle
+     * @param varList une liste de variables non instanciées
+     * @return une solution etandant la solution partielle si elle existe, null s'il y en a pas
+     * 
+     * 
+     */
     private Map<Variable, Object> backtrack(Map<Variable, Object> partialAssignment, List<Variable> varList) {
     	List<Variable>  variList = new ArrayList<>(varList);
         if (variList.isEmpty()) {
