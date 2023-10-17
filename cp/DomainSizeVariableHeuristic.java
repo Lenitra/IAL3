@@ -7,36 +7,37 @@ import modelling.Variable;
 
 public class DomainSizeVariableHeuristic implements VariableHeuristic{
     
-    private boolean bool;
+    protected boolean bool;
 
     public DomainSizeVariableHeuristic(boolean bool) {
         this.bool = bool;
     }
 
     @Override
-    public Variable best(Set<Variable> variables, Map<Variable, Set<Object>> domaines) {
+    public Variable best(Set<Variable> variables, Map<Variable, Set<Object>> domains) {
         Variable best = null;
-        int sizeref = 0;
+        int size = 0;
         for (Variable var : variables) {
-            int sizedom = domaines.get(var).size();
-
+            int domainSize = domains.get(var).size();
             if (best == null) {
                 best = var;
-                sizeref = sizedom;
+                size = domainSize;
             } else {
                 if (bool) {
-                    if (sizedom > sizeref) {
+                    if (domainSize > size) {
                         best = var;
-                        sizeref = sizedom;
+                        size = domainSize;
                     }
-                } else {
-                    if (sizedom < sizeref) {
+                } else if (!bool) {
+                    if (domainSize < size) {
                         best = var;
-                        sizeref = sizedom;
+                        size = domainSize;
                     }
                 }
             }
         }
         return best;
     }
+
+
 }
