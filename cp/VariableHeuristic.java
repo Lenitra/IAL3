@@ -7,6 +7,6 @@ import modelling.Variable;
 
 public interface VariableHeuristic {
     
-    public int best(Set<Variable> variables, Map<Variable, Set<Object>> domains);
+    public Variable best(Set<Variable> variables, Map<Variable, Set<Object>> domains);
 
 }
