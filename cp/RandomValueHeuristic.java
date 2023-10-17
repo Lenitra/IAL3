@@ -31,18 +31,14 @@ public class RandomValueHeuristic implements ValueHeuristic {
      *
      */
     @Override
-    public Set<Object> ordering(Variable var, Set<Object> domains) {
+    public List<Object> ordering(Variable var, Set<Object> domains) {
         List<Object> list = new ArrayList<>();
         for (Object obj : domains) {
             list.add(obj);
         }
         Collections.shuffle(list, random);
-        // parse list to set
-        Set<Object> set = new HashSet<>();
-        for (Object obj : list) {
-            set.add(obj);
-        }
-        return set;
+        
+        return list;
     }
 
     
