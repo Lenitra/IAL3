@@ -1,7 +1,9 @@
 package datamining;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -20,7 +22,7 @@ public class Apriori extends AbstractItemsetMiner {
 
         @Override
         public BooleanDatabase getDatabase() {
-            return database;
+            return database;    
         }
 
         /**
@@ -115,9 +117,53 @@ public class Apriori extends AbstractItemsetMiner {
             return true;
         }
 
+        /**
+         * Extrait des ensembles d’items fréquents de la base de données
+         * @param frequency  fréquence minimale
+         * @return un ensembles d'items qui respectent la fréquence minimale
+         */
         @Override
-        public Set<Itemset> extract(float frequency ) {
-            return null;
+        public Set<Itemset> extract(float frequency ) {     
+            //initialisation d'un ensembles d'items stockant les singletons fréquents
+            Set<Itemset> frequentItemsets = frequentSingletons(frequency);
+
+            //initialisation d'une liste pour suivre les ensembles d'items fréquents
+            List<SortedSet<BooleanVariable>> frequentItemsetsList = new ArrayList<>();
+
+            //on parcourt les singletons fréquents, puis on les trie et on les ajoute à la liste
+            for (Itemset itemset : frequentItemsets) {
+                Set<BooleanVariable> items = itemset.getItems();
+                SortedSet<BooleanVariable> sortedItems = new TreeSet<>(AbstractItemsetMiner.COMPARATOR);
+                sortedItems.addAll(items);
+                frequentItemsetsList.add(sortedItems);
+            }
+
+            while (!frequentItemsetsList.isEmpty()) {
+                List<SortedSet<BooleanVariable>> candidates = new ArrayList<>();
+
+                //on parcourt la liste des ensembles d'items fréquents
+                for (int i = 0; i < frequentItemsetsList.size(); i++) {
+                    for (int j = i + 1; j < frequentItemsetsList.size(); j++) {
+                        //on combine deux ensembles d'items fréquents
+                        SortedSet<BooleanVariable> candidate = combine(frequentItemsetsList.get(i), frequentItemsetsList.get(j));
+                        
+                        //si les deux ensembles peuvent être candidats
+                        if (candidate != null && allSubsetsFrequent(candidate, frequentItemsetsList)) {   
+                            //on calcule la fréquence de l'ensemble d'items
+                            float candidateFrequency = frequency(candidate);
+
+                            //s'il est au dessus de la fréquence minimale on l'ajoute à la liste des candidats et à l'ensemble des itemsets fréquents
+                            if (candidateFrequency >= frequency) {
+                                candidates.add(candidate);
+                                frequentItemsets.add(new Itemset(candidate, candidateFrequency));
+                            }
+                        }
+                    }
+                }
+                //on remplace la liste des ensembles d'items fréquents par la liste des candidats
+                frequentItemsetsList = candidates;
+            }
+            return frequentItemsets;
         }
     
 }

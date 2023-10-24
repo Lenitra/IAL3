@@ -21,13 +21,13 @@ public abstract class AbstractItemsetMiner implements ItemsetMiner{
     }
     
     public float frequency(Set<BooleanVariable> itemset){
-        int count = 0;
+        float count = 0;
         for (Set<BooleanVariable> transaction : this.database.getTransactions()) {
             if (transaction.containsAll(itemset)) {
                 count++;
             }
         }
-        return (float) count / this.database.getTransactions().size();
+        return count / this.database.getTransactions().size();
     }
 
     public static final Comparator<BooleanVariable> COMPARATOR =
