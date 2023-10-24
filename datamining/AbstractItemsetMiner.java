@@ -10,7 +10,7 @@ public abstract class AbstractItemsetMiner implements ItemsetMiner{
 //     constructeur prenant en argument une base (de type BooleanDatabase), d’un
 // accesseur pour cette base, et d’une méthode float frequency(Set<BooleanVariable>) retournant la
 // fréquence d’un ensemble donné d’items dans la base
-    private BooleanDatabase database;
+    protected BooleanDatabase database;
     
     public AbstractItemsetMiner(BooleanDatabase database) {
         this.database = database;
