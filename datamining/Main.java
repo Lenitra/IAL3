@@ -15,8 +15,7 @@ public class Main {
         ok = ok && AprioriTests.testExtract();
         ok = ok && AbstractAssociationRuleMinerTests.testFrequency();
         ok = ok && AbstractAssociationRuleMinerTests.testConfidence();
-        ok = ok &&
-        BruteForceAssociationRuleMinerTests.testAllCandidatePremises();
+        ok = ok && BruteForceAssociationRuleMinerTests.testAllCandidatePremises();
         ok = ok && BruteForceAssociationRuleMinerTests.testExtract();
         System.out.println(ok ? "All tests OK" : "At least one test KO");
         

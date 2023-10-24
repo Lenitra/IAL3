@@ -3,6 +3,7 @@
         "lib/**/*.jar",
         "libs/cptests.jar",
         "libs/modellingtests.jar",
-        "libs/planningtests.jar"
+        "libs/planningtests.jar",
+        "libs/dataminingtests.jar"
     ]
 }
