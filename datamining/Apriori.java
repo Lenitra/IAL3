@@ -86,7 +86,7 @@ public class Apriori extends AbstractItemsetMiner {
 
             //si toutes les conditions passent
             //on crée un nouvel ensemble trié d'items
-            SortedSet<BooleanVariable> combineSet = new TreeSet<>(COMPARATOR);
+            SortedSet<BooleanVariable> combineSet = new TreeSet<>(AbstractItemsetMiner.COMPARATOR);
 
             //on combine les deux ensembles
             combineSet.addAll(set1);
@@ -138,6 +138,7 @@ public class Apriori extends AbstractItemsetMiner {
                 frequentItemsetsList.add(sortedItems);
             }
 
+            //tant que la liste des ensembles d'items fréquents n'est pas vide
             while (!frequentItemsetsList.isEmpty()) {
                 List<SortedSet<BooleanVariable>> candidates = new ArrayList<>();
 
