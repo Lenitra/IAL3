@@ -140,29 +140,32 @@ public class Apriori extends AbstractItemsetMiner {
 
             //tant que la liste des ensembles d'items fréquents n'est pas vide
             while (!frequentItemsetsList.isEmpty()) {
-                List<SortedSet<BooleanVariable>> candidates = new ArrayList<>();
+                //on crée une liste vide pour stocker les candidats
+                List<SortedSet<BooleanVariable>> candidats = new ArrayList<>();
 
                 //on parcourt la liste des ensembles d'items fréquents
                 for (int i = 0; i < frequentItemsetsList.size(); i++) {
                     for (int j = i + 1; j < frequentItemsetsList.size(); j++) {
                         //on combine deux ensembles d'items fréquents
-                        SortedSet<BooleanVariable> candidate = combine(frequentItemsetsList.get(i), frequentItemsetsList.get(j));
+                        SortedSet<BooleanVariable> candidat = combine(frequentItemsetsList.get(i), frequentItemsetsList.get(j));
                         
                         //si les deux ensembles peuvent être candidats
-                        if (candidate != null && allSubsetsFrequent(candidate, frequentItemsetsList)) {   
+                        if (candidat != null && allSubsetsFrequent(candidat, frequentItemsetsList)) {   
                             //on calcule la fréquence de l'ensemble d'items
-                            float candidateFrequency = frequency(candidate);
+                            float candidateFrequency = frequency(candidat);
 
                             //s'il est au dessus de la fréquence minimale on l'ajoute à la liste des candidats et à l'ensemble des itemsets fréquents
                             if (candidateFrequency >= frequency) {
-                                candidates.add(candidate);
-                                frequentItemsets.add(new Itemset(candidate, candidateFrequency));
+                                //on ajoute l'ensemble d'items à la liste des candidats globale
+                                candidats.add(candidat);
+                                //on ajoute l'ensemble d'items à l'ensemble des itemsets fréquents
+                                frequentItemsets.add(new Itemset(candidat, candidateFrequency));
                             }
                         }
                     }
                 }
                 //on remplace la liste des ensembles d'items fréquents par la liste des candidats
-                frequentItemsetsList = candidates;
+                frequentItemsetsList = candidats;
             }
             return frequentItemsets;
         }
