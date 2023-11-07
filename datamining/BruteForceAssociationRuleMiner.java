@@ -1,7 +1,6 @@
 package datamining;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 import modelling.BooleanVariable;
@@ -23,40 +22,36 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
      * @return un ensemble contenant tous les sous ensembles de l'itemset
      */
     public static Set<Set<BooleanVariable>> allCandidatePremises(Set<BooleanVariable> itemset){
-        //on stocke tous les sous-ensembles de l'itemset dans un ensemble
+        //on crée un ensemble vide de sous-ensembles
         Set<Set<BooleanVariable>> candidatePremises = new HashSet<>();
+        candidatePremises.add(new HashSet<>());
 
-        //on regarde le nombre de sous-ensembles possibles
-        //math.pow correspond à la fonction puissance où on fait 2 puissance le nombre d'éléments de l'itemset
-        int n = (int) Math.pow(2, itemset.size());
+        //on parcourt les items de l'itemset
+        for(BooleanVariable item : itemset){
+            //on crée un candidat sous-ensemble
+            Set<Set<BooleanVariable>> newCandidatePremises = new HashSet<>();
 
-        //on parcourt tous les sous-ensembles possibles calculés au dessus
-        for(int i = 1; i < n; i++){
-            //on crée un ensemble vide pour stocker les sous-ensembles
-            Set<BooleanVariable> s = new HashSet<>();
-            //on crée un itérateur pour parcourir les éléments de l'itemset
-            Iterator<BooleanVariable> it = itemset.iterator();
+            //on parcourt tous les candidats sous-ensembles
+            for (Set<BooleanVariable> candidatePremise : candidatePremises){
+                //on ajoute le candidat sous-ensemble à l'ensemble des sous-ensembles
+                newCandidatePremises.add(candidatePremise);
 
-            //on parcourt les éléments de l'itemset
-            for(int j = 0; j < itemset.size(); j++){
-                //on récupère l'élément suivant
-                BooleanVariable var = it.next();
-
-                //on regarde si l'élément est dans le sous-ensemble
-                //on regarde si le bit j de i est à 1
-                if((i & (int) Math.pow(2, j)) != 0){
-                    s.add(var);
-                }
-            }
-            //on ajoute l'ensemble à l'ensemble des sous-ensembles
-            candidatePremises.add(s);
+                //on crée un nouveau sous-ensemble qui contient le candidat sous-ensemble et l'item
+                Set<BooleanVariable> newCandidatePremise = new HashSet<>(candidatePremise);
+                newCandidatePremise.add(item);
+                newCandidatePremises.add(newCandidatePremise);
+            } 
+            //on met à jour l'ensemble des sous-ensembles
+            candidatePremises = newCandidatePremises;
         }
-        //on enlève l'ensemble vide et l'itemset de l'ensemble des sous-ensembles
+        //on supprime l'ensemble vide et l'itemset de l'ensemble des sous-ensembles donné en paramètre
         candidatePremises.remove(new HashSet<>());
         candidatePremises.remove(itemset);
-        System.out.println(candidatePremises);
+
+        //on retourne l'ensemble des sous-ensembles
         return candidatePremises;
     }
+
 
     /**
      * Extrait les règles d'association dont la fréquence est supérieure ou égale à frequency et la confanice est supérieure ou égale à confidence
