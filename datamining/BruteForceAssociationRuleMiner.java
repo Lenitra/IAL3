@@ -42,8 +42,8 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
                 //on récupère l'élément suivant
                 BooleanVariable var = it.next();
 
-                //on vérifie que le j-ième bit de i est à 1
-                //si c'est le cas on ajoute l'élément à l'ensemble
+                //on regarde si l'élément est dans le sous-ensemble
+                //on regarde si le bit j de i est à 1
                 if((i & (int) Math.pow(2, j)) != 0){
                     s.add(var);
                 }
@@ -54,14 +54,14 @@ public class BruteForceAssociationRuleMiner extends AbstractAssociationRuleMiner
         //on enlève l'ensemble vide et l'itemset de l'ensemble des sous-ensembles
         candidatePremises.remove(new HashSet<>());
         candidatePremises.remove(itemset);
-
+        System.out.println(candidatePremises);
         return candidatePremises;
     }
 
     /**
      * Extrait les règles d'association dont la fréquence est supérieure ou égale à frequency et la confanice est supérieure ou égale à confidence
      * @param frequency  fréquence minimum pour les ensembles d'éléments
-     * @param confidence confiance minimum pour les règles d'associatio
+     * @param confidence confiance minimum pour les règles d'association
      * @return un ensemble de règles d'association
      */
     @Override
