@@ -51,24 +51,17 @@ public abstract class AbstractAssociationRuleMiner implements AssociationRuleMin
      * @return la confiance de la règle d'association de premisse et conclusion
      */
     public static float confidence(Set<BooleanVariable> premise, Set<BooleanVariable> conclusion, Set<Itemset> itemsets) {
-        //on calcule la fréquence du prémisse
-        float supportPremise = frequency(premise, itemsets);
-        
-        //on créé un ensemble contenant le prémisse et la conclusion
-        Set<BooleanVariable> combinedItemset = new HashSet<>(premise);
-        combinedItemset.addAll(conclusion);
-        
-        //on calcule la fréquence de l'ensemble créé au dessus
-        float supportCombined = frequency(combinedItemset, itemsets);
-        
-        //si la fréquence du prémisse est supérieure à 0
-        if (supportPremise > 0) {
-            //on retourne la confiance de la règle d'association
-            return supportCombined / supportPremise;
-        } else {
-            //sinon on retourne 0
-            return 0;
-        }
-    }
+        //on crée un ensemble contenant la prémisse et la conclusion
+        Set<BooleanVariable> union = new HashSet<>(premise);
+        union.addAll(conclusion);
 
+        //on calcule la fréquence de l'ensemble
+        float unionFrequency = frequency(union, itemsets);
+
+        //on calcule la fréquence de la prémisse
+        float premiseFrequency = frequency(premise, itemsets);
+
+        //on calcule la confiance
+        return unionFrequency / premiseFrequency;
+    }
 }
