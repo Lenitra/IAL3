@@ -80,6 +80,8 @@ public class Apriori extends AbstractItemsetMiner {
             }
 
             //test si les deux ensembles ont des k^es items différents
+            //le headset sert à récupérer tous les éléments de l'ensemble sauf le dernier
+            //si les deux ensembles sont différents on retourne null
             if (!set1.headSet(set1.last()).equals(set2.headSet(set2.last()))) {
                 return null;
             }
