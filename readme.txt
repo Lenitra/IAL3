@@ -4,3 +4,6 @@ TP réalisé par :
 
 Classe executable : `cp/Main.java` 
 Classe executable : `datamining/Main.java` 
+
+Classe executable : `planning/Main.java` 
+Classe executable : `modelling/Main.java` 
