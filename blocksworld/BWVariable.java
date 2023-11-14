@@ -37,8 +37,12 @@ public class BWVariable {
         return freep;
     }
 
-    public int getAllVars(){
-        return onb.size() + fixedb.size() + freep.size();
+    public Set<Variable> getAllVars() {
+        Set<Variable> allVars = new HashSet<>();
+        allVars.addAll(onb);
+        allVars.addAll(fixedb);
+        allVars.addAll(freep);
+        return allVars;
     }
 
 
@@ -87,6 +91,8 @@ public class BWVariable {
             return "BWVariable\nfixedb=\n" + fixedb + "\nfreep=" + freep + "\nnbBlocks=" + nbBlocks + "\nnbPiles="
                     + nbPiles + "\nonb=" + onb + "]";
         }
+
+
 
 
 }
