@@ -18,74 +18,74 @@ public class Main {
 
             for (Variable var : bwc.getBWVariable().getAllVars()) {
                 String name = var.getName();
-                if(name.equals("on_0")) {
+                if(name.equals("On_0")) {
                     map.put(var, -1);
                 }
 
-                if(name.equals("on_1")) {
+                if(name.equals("On_1")) {
                     map.put(var, -2);
                 }
 
-                if(name.equals("on_2")) {
+                if(name.equals("On_2")) {
                     map.put(var, 0);
                 }
 
-                if(name.equals("on_3")) {
+                if(name.equals("On_3")) {
                     map.put(var, 1);
                 }
 
-                if(name.equals("fixed_0")) {
+                if(name.equals("Fi_0")) {
                     map.put(var, true);
                 }
 
-                if(name.equals("fixed_1")) {
+                if(name.equals("Fi_1")) {
                     map.put(var, true);
                 }
 
-                if(name.equals("fixed_2")) {
+                if(name.equals("Fi_2")) {
                     map.put(var, false);
                 }
 
-                if(name.equals("fixed_3")) {
+                if(name.equals("Fi_3")) {
                     map.put(var, false);
                 }
 
-                if(name.equals("free_-1")) {
+                if(name.equals("Fr_-1")) {
                     map.put(var, false);
                 }
 
-                if(name.equals("free_-2")) {
+                if(name.equals("Fr_-2")) {
                     map.put(var, false);
                 }
             }
 
             for (Variable var2 : bwc2.getBWVariable().getAllVars()) {
                 String name2 = var2.getName();
-                if (name2.equals("on_0")) {
+                if (name2.equals("On_0")) {
                     map2.put(var2, 1);
                 }
 
-                if (name2.equals("on_1")) {
+                if (name2.equals("On_1")) {
                     map2.put(var2, 2);
                 }
 
-                if (name2.equals("on_2")) {
+                if (name2.equals("On_2")) {
                     map2.put(var2, -1);
                 }
 
-                if (name2.equals("fixed_0")) {
+                if (name2.equals("Fi_0")) {
                     map2.put(var2, false);
                 }
 
-                if (name2.equals("fixed_1")) {
+                if (name2.equals("Fi_1")) {
                     map2.put(var2, true);
                 }
 
-                if(name2.equals("fixed_2")) {
+                if(name2.equals("Fi_2")) {
                     map2.put(var2, true);
                 }
 
-                if(name2.equals("free_-1")) {
+                if(name2.equals("Fr_-1")) {
                     map2.put(var2, false);
                 }
             }
