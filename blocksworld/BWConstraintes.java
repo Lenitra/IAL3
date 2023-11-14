@@ -58,35 +58,6 @@ public class BWConstraintes extends BlocksWorld{
         return resultat; // on retourne l’ensemble des contraintes
     }
 
-    // public void setDifferent() {
-    //     Set<Variable> var = bwv.getOnb();
-    //     for (Variable variable1 : var) {
-    //         for (Variable variable2 : var) {
-    //             if (!variable1.equals(variable2)) {
-    //                 constraints.add(new DifferenceConstraint(variable1, variable2));
-    //             }
-    //         }
-    //     }
-    // }
-
-
-    // public void setImplication() {
-    //     Set<Variable> var = bwv.getOnb();
-    //     Set<Variable> var2 = bwv.getFixedb();
-    //     Set<Variable> var3 = bwv.getFreep();
-    //     for (Variable variable1 : var) {
-    //         for (Variable variable2 : var2) {
-    //             // On recupere le i dans le nom de la variable de la forme Variable("fixed_" + i);
-    //             int i = Integer.parseInt(variable2.getName().substring(6));
-    //             constraints.add(new Implication(variable1, Set.of(i), variable2, Set.of(true)));
-    //         }
-    //         for (Variable variable3 : var3) {
-    //             // On recupere le i dans le nom de la variable de la forme Variable("free_" + i);
-    //             int i = Integer.parseInt(variable3.getName().substring(5));
-    //             constraints.add(new Implication(variable1, Set.of(i), variable3, Set.of(false)));
-    //         }
-    //     }
-    // }
 
     public Set<Constraint> getConstraints() {
         return constraints;

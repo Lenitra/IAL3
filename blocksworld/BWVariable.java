@@ -1,8 +1,6 @@
 package blocksworld;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import modelling.BooleanVariable;
@@ -90,6 +88,23 @@ public class BWVariable {
         public String toString() {
             return "BWVariable\nfixedb=\n" + fixedb + "\nfreep=" + freep + "\nnbBlocks=" + nbBlocks + "\nnbPiles="
                     + nbPiles + "\nonb=" + onb + "]";
+        }
+
+
+
+
+        public int getIndex(Variable var) {
+            String name = var.getName();
+            int index = Integer.parseInt(name.substring(2));
+            return index;
+        }
+
+
+    
+
+
+        public Object getPile() {
+            return null;
         }
 
 
