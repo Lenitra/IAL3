@@ -69,13 +69,13 @@ public class BWVariable {
 
         // On instancie les variables de type fixed_blocs
         for (int i = 0; i < nbBlocks; i++) {
-            Variable var = new BooleanVariable("Fixed"+i);
+            Variable var = new BooleanVariable("Fi"+i);
             fixedb.add(var);
         }
 
         // On instancie les variables de type free_piles
         for (int i = 0; i < nbPiles; i++) {
-            Variable var = new BooleanVariable("Free"+i);
+            Variable var = new BooleanVariable("Fr"+i);
             freep.add(var);
         }
 

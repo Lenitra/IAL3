@@ -18,16 +18,11 @@ public class BlocksWorld {
         this.nbBlocks = block;
         this.nbPiles = pile;
         this.bwv = new BWVariable(block, pile);
+        
     }
 
 
-    public String toString() {
-        return "BlocksWorld{" +
-                "nbBlocks=" + nbBlocks +
-                ", nbPiles=" + nbPiles +
-                ", bwv=" + bwv +
-                '}';
-    }
+    
     
     public Set<Variable> getOnbV() {
         return bwv.getOnb();
