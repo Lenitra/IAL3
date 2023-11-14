@@ -9,11 +9,11 @@ public class Variable {
 
     /**
      * Constructeur de la classe Variable
-     * @param name le nom de la variable
+     * @param i le nom de la variable
      * @param domain le domaine des valeurs de la variable
      */
-    public Variable(String name, Set<Object> domain) {
-        this.name = name;
+    public Variable(String i, Set<Object> domain) {
+        this.name = i;
         this.domain = domain;
     }
 
@@ -61,6 +61,13 @@ public class Variable {
 
     public void removeValueFromDomain(Object value) {
         this.domain.remove(value);
+    }
+
+    // to string
+    @Override
+    public String toString() {
+
+        return "Variable [domain=" + domain.toString() + ", name=" + name + "]";
     }
 
 }
