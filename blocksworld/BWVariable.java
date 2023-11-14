@@ -17,7 +17,6 @@ public class BWVariable {
     protected Set<Variable> freep = new HashSet<>(); // ensemble des blocs
 
 
-
     public BWVariable(int nbBlocks, int pile) {
         this.nbBlocks = nbBlocks;
         this.nbPiles = pile;
@@ -25,6 +24,22 @@ public class BWVariable {
     }
 
 
+
+    public Set<Variable> getOnb() {
+        return onb;
+    }
+
+    public Set<Variable> getFixedb() {
+        return fixedb;
+    }
+
+    public Set<Variable> getFreep() {
+        return freep;
+    }
+
+    public int getAllVars(){
+        return onb.size() + fixedb.size() + freep.size();
+    }
 
 
     public void setVariables(){
