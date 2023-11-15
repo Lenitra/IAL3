@@ -1,56 +1,40 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.Set;
 
-import modelling.*;
+import modelling.Variable;
 
-/**
- * Classe Abstraite BlocksWorld
- */
 public class BlocksWorld {
 
     protected int nbBlocks; // nombre de blocs
-    protected int nbPiles; // pile.
-    protected BWVariable bwv; // ensemble des variables.
+    protected int nbPiles; // nombre de piles
+    protected BWVariable bw; // ensemble des variables.
 
-
-    public BlocksWorld(int block, int pile) {
-        this.nbBlocks = block;
-        this.nbPiles = pile;
-        this.bwv = new BWVariable(block, pile);
-        
+    // constructeur
+    public BlocksWorld(int nbBlocks, int nbPiles) {
+        this.nbBlocks = nbBlocks;
+        this.nbPiles = nbPiles;
+        this.bw = new BWVariable(nbBlocks, nbPiles);
     }
 
-
-    
-    
-    public Set<Variable> getOnbV() {
-        return bwv.getOnb();
+    public Set<Variable> getOnb() {
+        return bw.getOnb();
     }
 
-    public Set<Variable> getFixedbV() {
-        return bwv.getFixedb();
+    public Set<Variable> getFixedb() {
+        return bw.getFixedb();
     }
 
-    public Set<Variable> getFreepV() {
-        return bwv.getFreep();
+    public Set<Variable> getFreep() {
+        return bw.getFreep();
     }
 
     public Set<Variable> getVariables() {
-        return bwv.getAllVars();
+        return bw.getAllVars();
     }
 
-
-
-    public int getNbBlocks() {
-        return this.nbBlocks;
+    public BWVariable getBWVariable() {
+        return this.bw;
     }
-
-    public int getNbPiles() {
-        return this.nbPiles;
-    }
-
-
-
-
+    
 }

@@ -18,7 +18,6 @@ public class BWVariable {
     public BWVariable(int nbBlocks, int pile) {
         this.nbBlocks = nbBlocks;
         this.nbPiles = pile;
-        setVariables();
     }
 
 
@@ -37,77 +36,91 @@ public class BWVariable {
 
     public Set<Variable> getAllVars() {
         Set<Variable> allVars = new HashSet<>();
+        OnB();
+        FixedB();
+        FreeP(); 
         allVars.addAll(onb);
         allVars.addAll(fixedb);
         allVars.addAll(freep);
         return allVars;
     }
 
-
-    public void setVariables(){
-        //#region Définition des domaines    
-    
-        Set<Object> onDomain = new HashSet<>(); // domaine des valeurs des blocs
+    public Set<Variable> OnB(){
+        Set<Variable> onb = new HashSet<>();
         for (int i = 0; i < nbBlocks; i++) {
-            onDomain.add(i);
-        }
-        for (int i = 0; i < nbPiles; i++) {
-            onDomain.add(-i-1);
-        }
-        //#endregion
-
-
-        //#region Définition des variables
-
-        // On instancie les variables de type on_blocs
-        for (int i = 0; i < nbBlocks; i++) {
-            Variable var = new Variable("On"+i, onDomain);
+            Variable var = new Variable("On"+i, new HashSet<>());
             onb.add(var);
-        }
+        }   
+        return onb;
+    }
 
-        // On instancie les variables de type fixed_blocs
+    public Set<Variable> FixedB(){
+        Set<Variable> fixedb = new HashSet<>();
         for (int i = 0; i < nbBlocks; i++) {
             Variable var = new BooleanVariable("Fi"+i);
             fixedb.add(var);
-        }
+        }   
+        return fixedb;
+    }
 
-        // On instancie les variables de type free_piles
+    public Set<Variable> FreeP(){
+        Set<Variable> freep = new HashSet<>();
         for (int i = 0; i < nbPiles; i++) {
             Variable var = new BooleanVariable("Fr"+i);
             freep.add(var);
-        }
-
-        // #endregion
-
-
+        }   
+        return freep;
     }
-        
 
+    // public void setVariables(){
+    //     //#region Définition des domaines    
+    
+    //     Set<Object> onDomain = new HashSet<>(); // domaine des valeurs des blocs
+    //     for (int i = 0; i < nbBlocks; i++) {
+    //         onDomain.add(i);
+    //     }
+    //     for (int i = 0; i < nbPiles; i++) {
+    //         onDomain.add(-i-1);
+    //     }
+    //     //#endregion
+
+
+    //     //#region Définition des variables
+
+    //     // On instancie les variables de type on_blocs
+    //     for (int i = 0; i < nbBlocks; i++) {
+    //         Variable var = new Variable("On"+i, onDomain);
+    //         onb.add(var);
+    //     }
+
+    //     // On instancie les variables de type fixed_blocs
+    //     for (int i = 0; i < nbBlocks; i++) {
+    //         Variable var = new BooleanVariable("Fi"+i);
+    //         fixedb.add(var);
+    //     }
+
+    //     // On instancie les variables de type free_piles
+    //     for (int i = 0; i < nbPiles; i++) {
+    //         Variable var = new BooleanVariable("Fr"+i);
+    //         freep.add(var);
+    //     }
+
+    //     // #endregion
+
+
+    // }
+    
+    //get index
+    public int getIndex(Variable var) {
+        String name = var.getName();
+        int index = Integer.parseInt(name.substring(2));
+        return index;
+    }
 
         @Override
         public String toString() {
             return "BWVariable\nfixedb=\n" + fixedb + "\nfreep=" + freep + "\nnbBlocks=" + nbBlocks + "\nnbPiles="
                     + nbPiles + "\nonb=" + onb + "]";
         }
-
-
-
-
-        public int getIndex(Variable var) {
-            String name = var.getName();
-            int index = Integer.parseInt(name.substring(2));
-            return index;
-        }
-
-
-    
-
-
-        public Object getPile() {
-            return null;
-        }
-
-
-
 
 }
