@@ -4,32 +4,27 @@ import java.util.*;
 
 import modelling.*;
 
-public class BWRegularyConstraintes extends BWConstraintes {
+public class BWRegularyConstraintes extends BWConstraintes{
 
-    public BWRegularyConstraintes(int nbBlocks, int pile) {
-        super(nbBlocks, pile);
-        setRegularyConstraints();
-
+    public BWRegularyConstraintes(int nbBlocks, int nbPiles) {
+        super(nbBlocks, nbPiles);
+        RegularyConstraint(); 
     }
 
-    /**
-     * Method instanciating constraints in order to achieve a regular configuration
-     */
-    public void setRegularyConstraints() {
-        
-        for (Variable Oni : bwv.getOnb()) {
+    public void RegularyConstraint() {
+        for (Variable Oni : bw.getOnb()) {
 
-            for(Variable Onj : bwv.getOnb()) {
+            for(Variable Onj : bw.getOnb()) {
 
-                int i = bwv.getIndex(Oni);
-                int j = bwv.getIndex(Onj);
+                int i = bw.getIndex(Oni);
+                int j = bw.getIndex(Onj);
                 int k = j - (i - j);
 
                 if (i != j) {
                     Set<Object> Domain_i = new HashSet<>();
                     Domain_i.add(j);
-                    Set<Object> Domain_j = new HashSet<>(bwv.nbPiles);
-                    
+                    Set<Object> Domain_j = new HashSet<>(bw.getPile());
+
                     if(k >= 0 && k < nbBlocks) {
                         Domain_j.add(k);
                     }
@@ -40,8 +35,5 @@ public class BWRegularyConstraintes extends BWConstraintes {
             }
         }
     }
-
     
-
 }
-    

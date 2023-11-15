@@ -8,8 +8,6 @@ import modelling.*;
 
 public class BWConstraintes extends BlocksWorld{
 
-    
-
     protected int block; // nombre de blocs
     protected int pile; // pile
     // ensemble des contraintes
@@ -19,7 +17,6 @@ public class BWConstraintes extends BlocksWorld{
 
     public BWConstraintes(int block, int pile) {
         super(block, pile);
-        this.constraints = new HashSet<>();
         this.constraints = allConstraints();
     }
 
@@ -31,15 +28,12 @@ public class BWConstraintes extends BlocksWorld{
         Set<Variable> variablesFree = variables.getFreep();
 
         for(Variable variable1 : variablesOn){ // On loop sur les variables de de blocks On
-
-
             // Contrainte de type On (Un bloc ne peut pas être sur lui même)
             for(Variable variable2 : variablesOn){
                 if(!variable1.equals(variable2)){
                     resultat.add(new DifferenceConstraint(variable1, variable2));
                 }
             }
-
 
             // Contrainte de type fixed 
             for(Variable variable3 : variablesFixed){
@@ -58,17 +52,18 @@ public class BWConstraintes extends BlocksWorld{
         return resultat; // on retourne l’ensemble des contraintes
     }
 
-
     public Set<Constraint> getConstraints() {
         return constraints;
     }
 
+    public Set<Variable> getVariables() {
+        return variables;
+    }    
+    
     @Override
     public String toString() {
-        return "{" + "nbBlocks=" + nbBlocks + ", pile=" + nbPiles + ", constraints=" + getConstraints() +"}";
+      return "{" +
+          "constraints='" + getConstraints() + "'" +
+          "}";
     }
-
-    
-    
-    
 }

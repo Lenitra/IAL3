@@ -17,7 +17,15 @@ public class BlocksWorld {
         this.bw = new BWVariable(nbBlocks, nbPiles);
     }
 
-    public Set<Variable> getOnb() {
+    public int getNbBlocks() {
+        return this.nbBlocks;
+    }
+
+    public int getNbPiles() {
+        return this.nbPiles;
+    }
+
+    public Set<Variable> getOnbV() {
         return bw.getOnb();
     }
 
@@ -30,7 +38,7 @@ public class BlocksWorld {
     }
 
     public Set<Variable> getVariables() {
-        return bw.getAllVars();
+        return bw.setAllVars();
     }
 
     public BWVariable getBWVariable() {

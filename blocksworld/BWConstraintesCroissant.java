@@ -27,9 +27,9 @@ public class BWConstraintesCroissant extends BlocksWorld{
 
     public Set<Constraint> allConstraintsCroissant() {
         Set<Constraint> resultat = new HashSet<>(); // ensemble des contraintes
-        Set<Variable> variablesOn = bwv.getOnb();
-        Set<Variable> variablesFixed = bwv.getFixedb();
-        Set<Variable> variablesFree = bwv.getFreep();
+        Set<Variable> variablesOn = bw.getOnb();
+        Set<Variable> variablesFixed = bw.getFixedb();
+        Set<Variable> variablesFree = bw.getFreep();
 
         // Contrainte de type On
         for(Variable variable1 : variablesOn){
@@ -58,7 +58,7 @@ public class BWConstraintesCroissant extends BlocksWorld{
     }
 
     public void setDifferent() {
-        Set<Variable> var = bwv.getOnb();
+        Set<Variable> var = bw.getOnb();
         for (Variable variable1 : var) {
             for (Variable variable2 : var) {
                 if (!variable1.equals(variable2)) {
@@ -72,9 +72,9 @@ public class BWConstraintesCroissant extends BlocksWorld{
      * Methode instanciating all the constraints of the type Implication
      */
     public void setImplication() {
-        Set<Variable> var = bwv.getOnb();
-        Set<Variable> var2 = bwv.getFixedb();
-        Set<Variable> var3 = bwv.getFreep();
+        Set<Variable> var = bw.getOnb();
+        Set<Variable> var2 = bw.getFixedb();
+        Set<Variable> var3 = bw.getFreep();
         for (Variable variable1 : var) {
             for (Variable variable2 : var2) {
                 // On recupere le i dans le nom de la variable de la forme Variable("fixed_" + i);
