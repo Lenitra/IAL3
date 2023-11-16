@@ -50,9 +50,6 @@ public class BWPlanner extends BlocksWorld {
                     }
 
                     
-                
-                    
-                    
                     // on récupère les numéros des blocs
                     int num1 = Integer.parseInt(bk1.getName().substring(2));
                     int num2 = Integer.parseInt(bk2.getName().substring(2));
@@ -61,7 +58,7 @@ public class BWPlanner extends BlocksWorld {
                     
                     
                     // precondition :
-                    // On num1 = On num2.name
+                    // On num1 = num2
                     // Fi num1 = false
                     // Fi num3 = false
                     Map <Variable, Object> precondition = new HashMap<>();
@@ -74,7 +71,7 @@ public class BWPlanner extends BlocksWorld {
                     // effects : 
                     // Fi num2 = false
                     // Fi num3 = true
-                    // On num1.value = On num3.name
+                    // On num1.value = num3
                     Map <Variable, Object> effect = new HashMap<>();
                     effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
                     effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num3], true);
@@ -102,7 +99,7 @@ public class BWPlanner extends BlocksWorld {
                     int num3 = Integer.parseInt(p1.getName().substring(2));
 
                     // precondition :
-                    // On num1 = On num2.name
+                    // On num1 = num2
                     // Fi num1 = false
                     // Fr num3 = true
                     Map <Variable, Object> precondition = new HashMap<>();
