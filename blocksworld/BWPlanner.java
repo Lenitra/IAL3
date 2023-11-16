@@ -65,7 +65,7 @@ public class BWPlanner extends BlocksWorld {
                     // Fi num1 = false
                     // Fi num3 = false
                     Map <Variable, Object> precondition = new HashMap<>();
-                    precondition.put(bk1, bk2.getName());
+                    precondition.put(bk1, num2);
                     precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
                     precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num3], false);
                     
@@ -78,7 +78,7 @@ public class BWPlanner extends BlocksWorld {
                     Map <Variable, Object> effect = new HashMap<>();
                     effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
                     effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num3], true);
-                    effect.put(bk1, bk3.getName());
+                    effect.put(bk1, num3);
 
                     // On créé l'action
                     BasicAction action = new BasicAction(precondition, effect, 1);
@@ -89,7 +89,42 @@ public class BWPlanner extends BlocksWorld {
             }
         }
 
-        
+        // TYPE2
+        for (Variable bk1: variablesOn){
+            for (Variable bk2: variablesOn){
+                for (Variable p1: variablesFree){
+                    if (bk1.getName().equals(bk2.getName())) { 
+                        continue;
+                    }
+
+                    int num1 = Integer.parseInt(bk1.getName().substring(2));
+                    int num2 = Integer.parseInt(bk2.getName().substring(2));
+                    int num3 = Integer.parseInt(p1.getName().substring(2));
+
+                    // precondition :
+                    // On num1 = On num2.name
+                    // Fi num1 = false
+                    // Fr num3 = true
+                    Map <Variable, Object> precondition = new HashMap<>();
+                    precondition.put(bk1, num2);
+                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
+                    precondition.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], true);
+
+                    // effects :
+                    // Fi num2 = false
+                    // Fr num3 = false
+                    // On num1.value = num3
+                    Map <Variable, Object> effect = new HashMap<>();
+                    effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
+                    effect.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], false);
+                    effect.put(bk1, num3);
+
+                    // On créé l'action
+                    BasicAction action = new BasicAction(precondition, effect, 1);
+                    actions.add(action);
+                }
+            }
+        }
 
     
 
