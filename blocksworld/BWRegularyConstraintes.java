@@ -6,8 +6,15 @@ import modelling.*;
 
 public class BWRegularyConstraintes extends BWConstraintes{
 
+    // liste des contraintes
+    protected Set<Constraint> constraints = new HashSet<>();
+    protected int nbBlocks;
+    protected int nbPiles;
+
     public BWRegularyConstraintes(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
+        this.nbBlocks = nbBlocks;
+        this.nbPiles = nbPiles;
         RegularyConstraint(); 
     }
 
@@ -34,6 +41,11 @@ public class BWRegularyConstraintes extends BWConstraintes{
                 }
             }
         }
+    }
+
+    
+    public Set<Constraint> getConstraints() {
+        return this.constraints;
     }
     
 }

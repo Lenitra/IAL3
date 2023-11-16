@@ -81,21 +81,21 @@ public class BWVariable {
         }
 
         for (int i = 0; i < nbBlocks; i++) {
-            Variable var = new Variable("on_"+i, onDomain);
+            Variable var = new Variable("On"+i, onDomain);
             onbV.add(var);
         }
     }
 
     public void setFixedbV() {
         for (int i = 0; i < nbBlocks; i++) {
-            Variable fixedBool = new BooleanVariable("fixed_" + i);
+            Variable fixedBool = new BooleanVariable("Fi" + i);
             fixedbV.add(fixedBool);
         }
     }
 
     public void setFreepV() {
         for (int i = -nbPiles; i < 0; i++) { 
-            Variable freeBool = new BooleanVariable("free_" + i);
+            Variable freeBool = new BooleanVariable("Fr" + i);
             freepV.add(freeBool);
         }
     }
