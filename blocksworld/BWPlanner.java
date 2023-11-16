@@ -49,6 +49,7 @@ public class BWPlanner extends BlocksWorld {
                         continue;
                     }
 
+                    
                 
                     
                     
@@ -56,6 +57,7 @@ public class BWPlanner extends BlocksWorld {
                     int num1 = Integer.parseInt(bk1.getName().substring(2));
                     int num2 = Integer.parseInt(bk2.getName().substring(2));
                     int num3 = Integer.parseInt(bk3.getName().substring(2));
+
                     
                     
                     // precondition :

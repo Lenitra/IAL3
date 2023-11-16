@@ -14,7 +14,6 @@ public class Main {
         
         BWConstraintes bwc = new BWRegularyConstraintes(4, 2);
         Map<Variable, Object> map = new HashMap<>();
-        Map<Variable, Object> map2 = new HashMap<>();
         
         for (Variable var : bwc.getBWVariable().getAllVars()) {
             String name = var.getName();
@@ -67,6 +66,7 @@ public class Main {
         
         System.out.println(allSatisfied ? "test 1 OK" : "Test 1 pété");
         
+        Map<Variable, Object> map2 = new HashMap<>();
         BWConstraintes bwc2 = new BWConstraintes(3, 1);
         
         for (Variable var2 : bwc2.getBWVariable().getAllVars()) {
@@ -96,7 +96,7 @@ public class Main {
             }
 
             if(name2.equals("Fr-1")) {
-                map2.put(var2, true);
+                map2.put(var2, true); // Valeur de Fr-1 doit être sur false
             }
         }
 
