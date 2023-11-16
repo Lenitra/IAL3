@@ -38,7 +38,7 @@ public class BlocksWorld {
     }
 
     public Set<Variable> getVariables() {
-        return bw.setAllVars();
+        return bw.getAllVars();
     }
 
     public BWVariable getBWVariable() {

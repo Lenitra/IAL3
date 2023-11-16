@@ -17,6 +17,8 @@ public class BWConstraintes extends BlocksWorld{
 
     public BWConstraintes(int block, int pile) {
         super(block, pile);
+        this.block = block;
+        this.pile = pile;
         this.constraints = allConstraints();
     }
 
@@ -28,24 +30,31 @@ public class BWConstraintes extends BlocksWorld{
         Set<Variable> variablesFree = variables.getFreep();
 
         for(Variable variable1 : variablesOn){ // On loop sur les variables de de blocks On
+            int num1 = Integer.parseInt(variable1.getName().substring(2)); // on récupère le numéro du bloc
+
             // Contrainte de type On (Un bloc ne peut pas être sur lui même)
             for(Variable variable2 : variablesOn){
-                if(!variable1.equals(variable2)){
-                    resultat.add(new DifferenceConstraint(variable1, variable2));
-                }
+                int num2 = Integer.parseInt(variable2.getName().substring(2)); // on récupère le numéro du bloc
+                if(num1 == num2) continue; // si les deux blocs sont les mêmes on continue
+                
+                resultat.add(new DifferenceConstraint(variable1, variable2)); // Les deux variables ne peuvent pas avoir la même valeur
+                
+            }
+            
+            // Contrainte de type Fixed
+            for(Variable variable2 : variablesFixed){
+                int num2 = Integer.parseInt(variable2.getName().substring(2)); // on récupère le numéro du bloc
+                if(num1 == num2) continue; // si les deux blocs sont les mêmes on continue
+                // si on variable1 est sur variable2 alors variable2 est fixed
+                resultat.add(new Implication(variable1, Set.of(num2), variable2, Set.of(true)));
             }
 
-            // Contrainte de type fixed 
-            for(Variable variable3 : variablesFixed){
-                int i = Integer.parseInt(variable3.getName().substring(2)); // numéro du bloc
-                // si variable1 est sur variable3 alors variable3 est fixé
-                resultat.add(new Implication(variable1, Set.of(i), variable3, Set.of(true)));
-            }
 
             // Contrainte de type free
-            for(Variable variable4 : variablesFree){
-                int i = Integer.parseInt(variable4.getName().substring(2)); // numéro du bloc
-                resultat.add(new Implication(variable1, Set.of(i), variable4, Set.of(false)));
+            for(Variable variable2 : variablesFree){
+                int num2 = Integer.parseInt(variable2.getName().substring(2)); // on récupère le numéro de la pile
+                // si On variable1 == numpile alors Fr variable3 = false
+                resultat.add(new Implication(variable1, Set.of(num2), variable2, Set.of(false))); 
             }
         }
         

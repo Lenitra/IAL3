@@ -18,18 +18,20 @@ public class BWVariable {
     public BWVariable(int nbBlocks, int pile) {
         this.nbBlocks = nbBlocks;
         this.nbPiles = pile;
-        this.var = new HashSet<>();
+        setAllVars();
+
+
+
     }
 
 
-    public Set<Variable> setAllVars() {
+    public void setAllVars() {
         setOnbV();
         setFixedbV();
         setFreepV(); 
         var.addAll(onbV);
         var.addAll(fixedbV);
         var.addAll(freepV);
-        return var;
     }
 
     // public Set<Variable> OnB(){
@@ -99,6 +101,7 @@ public class BWVariable {
             freepV.add(freeBool);
         }
     }
+
     //get index
     public int getIndex(Variable var) {
         String name = var.getName();

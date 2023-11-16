@@ -59,4 +59,11 @@ public class Implication implements Constraint {
         return true;
     }
 
+    // toString
+    @Override
+    public String toString() {
+        return "Implication(" + this.v1 + ", " + this.S1 + " ALORS " + this.v2 + ", " + this.S2 + ")";
+    }
+    
+
 }

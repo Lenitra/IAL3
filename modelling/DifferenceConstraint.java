@@ -45,4 +45,9 @@ public class DifferenceConstraint implements Constraint {
         return instantiation.get(v1) != instantiation.get(v2);
     }
 
+    // toString
+    public String toString() {
+        return "DifferenceConstraint(" + this.v1 + ", " + this.v2 + ")";
+    }
+
 }
