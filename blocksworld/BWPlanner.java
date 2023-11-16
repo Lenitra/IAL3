@@ -1,5 +1,9 @@
 package blocksworld;
 
+import java.util.*;
+import modelling.*;
+
+
 /**
  * BWPlanner
  */
@@ -13,11 +17,6 @@ public class BWPlanner {
         this.nbBlocks = nbBlocks;
         this.nbPiles = nbPiles;
     }
-
-
-
-
-
 
 
 }
