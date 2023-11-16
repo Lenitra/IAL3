@@ -112,7 +112,7 @@ public class BWVariable {
     }
 
     //get variable
-    public Set<Variable> getVars() {
+    public Set<Variable> getAllVars() {
         return var;
     }
 
