@@ -118,8 +118,5 @@ public class Main {
             }
         }
         System.out.println(allSatisfied ? "test 2 OK" : "Test 2 pété");
-        
-        
-
     }
 }

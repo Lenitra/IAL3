@@ -9,14 +9,14 @@ import planning.BasicAction;
 /**
  * BWPlanner
  */
-public class BWPlanner extends BlocksWorld {
+public class BWActions extends BlocksWorld {
 
     private int nbBlocks;
     private int nbPiles;
 
 
     // constructor
-    public BWPlanner(int nbBlocks, int nbPiles) {
+    public BWActions(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
         this.nbBlocks = nbBlocks;
         this.nbPiles = nbPiles;
