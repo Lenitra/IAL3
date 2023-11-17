@@ -59,8 +59,6 @@ public class Main {
         }
 
 
-
-
         for(Constraint cons : bwc1.getConstraints()) {
             if(!cons.isSatisfiedBy(map1)) {
                 System.out.println(cons.toString() + " n'est pas satisfait");
