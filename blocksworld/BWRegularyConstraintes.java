@@ -30,7 +30,7 @@ public class BWRegularyConstraintes extends BWConstraintes{
                 if (i != j) {
                     Set<Object> Domain_i = new HashSet<>();
                     Domain_i.add(j);
-                    Set<Object> Domain_j = new HashSet<>(bw.getPile());
+                    Set<Object> Domain_j = new HashSet<>(nbPiles);
 
                     if(k >= 0 && k < nbBlocks) {
                         Domain_j.add(k);

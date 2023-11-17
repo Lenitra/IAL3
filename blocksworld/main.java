@@ -67,7 +67,7 @@ public class Main {
                 allSatisfied = false;
             }
         }
-        System.out.println(allSatisfied ? "test 1 OK" : "Test 1 pété");        
+        System.out.println(allSatisfied ? "valide" : "NOPE");        
         
         
         
@@ -117,6 +117,6 @@ public class Main {
                 allSatisfied = false;
             }
         }
-        System.out.println(allSatisfied ? "test 2 OK" : "Test 2 pété");
+        System.out.println(allSatisfied ? "valide" : "NOPE");
     }
 }

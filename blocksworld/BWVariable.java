@@ -19,12 +19,9 @@ public class BWVariable {
         this.nbBlocks = nbBlocks;
         this.nbPiles = pile;
         setAllVars();
-
-
-
     }
 
-
+    // SET ALL VARIABLES - appelé dans le constructeur
     public void setAllVars() {
         setOnbV();
         setFixedbV();
@@ -34,33 +31,9 @@ public class BWVariable {
         var.addAll(freepV);
     }
 
-    // public Set<Variable> OnB(){
-    //     Set<Variable> onb = new HashSet<>();
-    //     for (int i = 0; i < nbBlocks; i++) {
-    //         Variable var = new Variable("On"+i, new HashSet<>());
-    //         onb.add(var);
-    //     }   
-    //     return onb;
-    // }
 
-    // public Set<Variable> FixedB(){
-    //     Set<Variable> fixedb = new HashSet<>();
-    //     for (int i = 0; i < nbBlocks; i++) {
-    //         Variable var = new BooleanVariable("Fi"+i);
-    //         fixedb.add(var);
-    //     }   
-    //     return fixedb;
-    // }
 
-    // public Set<Variable> FreeP(){
-    //     Set<Variable> freep = new HashSet<>();
-    //     for (int i = 0; i < nbPiles; i++) {
-    //         Variable var = new BooleanVariable("Fr"+i);
-    //         freep.add(var);
-    //     }   
-    //     return freep;
-    // }
-    
+    // GETTERS
     public Set<Variable> getOnb() {
         return onbV;
     }
@@ -72,7 +45,13 @@ public class BWVariable {
     public Set<Variable> getFreep() {
         return freepV;
     }
+        
+    public Set<Variable> getAllVars() {
+        return var;
+    }
 
+
+    // SETTERS
     public void setOnbV() {
         Set<Object> onDomain = new HashSet<>();
         for (int i = 0; i < nbBlocks; i++) {
@@ -102,32 +81,20 @@ public class BWVariable {
         }
     }
 
-    //get index
+
+
+    // Récupère l'index d'une variable
     public int getIndex(Variable var) {
         String name = var.getName();
         int index = Integer.parseInt(name.substring(2));
         return index;
     }
 
+
     @Override
     public String toString() {
         return "{ nbBlocks=" + nbBlocks + ", pile=" + nbBlocks + ", variables=" + var + '}';
     }
 
-    //get variable
-    public Set<Variable> getAllVars() {
-        return var;
-    }
 
-    public void setNbBlocks(int nbBlocks) {
-        this.nbBlocks = nbBlocks;
-    }
-
-    public void setPile(int pile) {
-        this.nbPiles = pile;
-    }
-
-    public int getPile() {
-        return nbPiles;
-    }
 }
