@@ -29,31 +29,26 @@ public class BWActions2 extends BlocksWorld {
                     }
                 }
             }
-        }
     
         // BLOCK VERS PILE
-        for (int block = 0; block < numBlocks; block++) {
             for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
-                for(int destiblock = 0; destiblock < numPiles; destiblock++) {
-                    if (block != sourceblock || block != destiblock || sourceblock != destiblock) {
-                        BlockOnPile(block, sourceblock, destiblock);
+                for(int destipile = 1; destipile <= numPiles; destipile++) {
+                    if (block != destipile || sourceblock != destipile) {
+                        BlockOnPile(block, sourceblock, destipile);
                     }
                 }
             }
-        }
 
         // BLOC SUR PILE VERS BLOC
-        for (int block = 0; block < numBlocks; block++) {
-            for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
+            for(int sourcePile = 0; sourcePile < numBlocks; sourcePile++) {
                 for(int destiblock = 0; destiblock < numBlocks; destiblock++) {
-                    if (block != sourceblock || block != destiblock || sourceblock != destiblock) {
-                        BlockPileOnBlock(block, sourceblock, destiblock);
+                    if (block != sourcePile || block != destiblock || sourcePile != destiblock) {
+                        BlockPileOnBlock(block, sourcePile, destiblock);
                     }
                 }
             }
-        }
+
         // BLOC SUR PILE VERS PILE
-        for (int block = 0; block < numBlocks; block++) {
             for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
                 for(int destiblock = 0; destiblock < numPiles; destiblock++) {
                     if (block != sourceblock || block != destiblock || sourceblock != destiblock) {
@@ -83,30 +78,31 @@ public class BWActions2 extends BlocksWorld {
         actions.add(action);
     }
 
-    public void BlockOnPile(int block, int sourceblock, int destiblock){
+    public void BlockOnPile(int block, int sourceblock, int destiPile){
         Variable varon = new Variable("On" + block, Set.of(sourceblock));
-        
         //précondition pour que l'action se produise 
         Map<Variable, Object> precondition = new HashMap<>();
         //il faut que le bloc soit sur un autre bloc
         precondition.put(varon,sourceblock);
         //il faut que le bloc ne soit pas fixé
         precondition.put(new BooleanVariable("Fi"+block), false);
-        //il faut que le bloc de base soit occupé
-        precondition.put(new BooleanVariable("Fr"+sourceblock), false);
+        //il faut que le bloc de base soit fixe
+        precondition.put(new BooleanVariable("Fi"+sourceblock), true);
         //il faut que la pile d'arrivée soit libre
-        precondition.put(new BooleanVariable("Fr"+destiblock), true);
+        precondition.put(new BooleanVariable("Fr"+destiPile), true);
 
         //effet de l'action
         Map<Variable, Object> effect = new HashMap<>();
         //le bloc est sur la pile d'arrivée
-        effect.put(varon, destiblock);
+        effect.put(varon, -destiPile);
         //le bloc n'est pas fixé
         effect.put(new BooleanVariable("Fi"+block), false);
         //la pile d'arrivée n'est plus libre
-        effect.put(new BooleanVariable("Fr"+destiblock), false);
+        effect.put(new BooleanVariable("Fr"+destiPile), false);
         //le bloc de base n'est plus occupé
-        effect.put(new BooleanVariable("Fr"+sourceblock), true);
+        effect.put(new BooleanVariable("Fi"+sourceblock), false);
+
+        System.err.println("BlockOnPile("+block+","+sourceblock+","+destiPile+")");
 
         Action action = new BasicAction(precondition, effect, 1);
         actions.add(action);
@@ -152,5 +148,6 @@ public class BWActions2 extends BlocksWorld {
     public Set<Action> getActions() {
         return actions;
     }
+
 
 }

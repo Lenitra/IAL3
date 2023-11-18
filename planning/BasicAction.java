@@ -59,4 +59,8 @@ public class BasicAction implements Action{
     public int getCost() {
         return this.cout;
     }
+
+    public String toString() {
+        return "Precondition : " + this.precondition + "\nEffect : " + this.effect + "\nCost : " + this.cout;
+    }
 }

@@ -57,8 +57,8 @@ public class BWVariable {
         for (int i = 0; i < nbBlocks; i++) {
             onDomain.add(i);
         }
-        for (int i = 0; i < nbPiles; i++) {
-            onDomain.add(-i-1);
+        for (int i = -nbPiles ; i <= -1; i++) {
+            onDomain.add(i);
         }
 
         for (int i = 0; i < nbBlocks; i++) {
