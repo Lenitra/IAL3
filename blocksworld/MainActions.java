@@ -3,7 +3,6 @@ package blocksworld;
 
 import java.util.*;
 
-import blocksworld.BWActions;
 import modelling.BooleanVariable;
 import modelling.Variable;
 import planning.Action;
