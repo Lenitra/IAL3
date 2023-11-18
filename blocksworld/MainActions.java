@@ -15,7 +15,7 @@ public class MainActions {
         int numPiles = 2;
 
         // Création des actions pour le monde des blocs
-        BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
+        BWActions2 blockWorldActions = new BWActions2(numBlocks, numPiles);
         Set<Action> allActions = blockWorldActions.getActions();
         System.out.println(allActions.size());
         // Affichage des actions générées

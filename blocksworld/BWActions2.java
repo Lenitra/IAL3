@@ -84,16 +84,28 @@ public class BWActions2 extends BlocksWorld {
     }
 
     public void BlockOnPile(int block, int sourceblock, int destiblock){
-        Map<Variable, Object> precondition = new HashMap<>();
         Variable varon = new Variable("On" + block, Set.of(sourceblock));
-
+        
+        //précondition pour que l'action se produise 
+        Map<Variable, Object> precondition = new HashMap<>();
+        //il faut que le bloc soit sur un autre bloc
         precondition.put(varon,sourceblock);
+        //il faut que le bloc ne soit pas fixé
         precondition.put(new BooleanVariable("Fi"+block), false);
+        //il faut que le bloc de base soit occupé
         precondition.put(new BooleanVariable("Fr"+sourceblock), false);
+        //il faut que la pile d'arrivée soit libre
+        precondition.put(new BooleanVariable("Fr"+destiblock), true);
 
+        //effet de l'action
         Map<Variable, Object> effect = new HashMap<>();
+        //le bloc est sur la pile d'arrivée
         effect.put(varon, destiblock);
+        //le bloc n'est pas fixé
         effect.put(new BooleanVariable("Fi"+block), false);
+        //la pile d'arrivée n'est plus libre
+        effect.put(new BooleanVariable("Fr"+destiblock), false);
+        //le bloc de base n'est plus occupé
         effect.put(new BooleanVariable("Fr"+sourceblock), true);
 
         Action action = new BasicAction(precondition, effect, 1);
