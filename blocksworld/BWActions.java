@@ -2,8 +2,7 @@ package blocksworld;
 
 import java.util.*;
 import modelling.*;
-import planning.Action;
-import planning.BasicAction;
+import planning.*;
 
 
 /**
@@ -204,4 +203,8 @@ public class BWActions extends BlocksWorld {
         return actions;
     }
 
+    // get allactions of actions
+    public Set<Action> getActions() {
+        return new HashSet<Action>(allActions());
+    }
 }
