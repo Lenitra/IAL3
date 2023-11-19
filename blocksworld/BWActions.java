@@ -110,7 +110,7 @@ public class BWActions extends BlocksWorld {
         //le bloc de base n'est plus occupé
         effect.put(new BooleanVariable("Fi"+sourceblock), false);
 
-        System.err.println("BlockToPile("+block+","+sourceblock+","+destiPile+")");
+        // System.err.println("BlockToPile("+block+","+sourceblock+","+destiPile+")");
 
         Action action = new BasicAction(precondition, effect, 1);
         actions.add(action);

@@ -60,6 +60,9 @@ public class MainPlanner {
         Planner djikstra = new DijkstraPlanner(initialState, actions, goal);
         PlannerTest(djikstra, "Dijkstra");
 
+        HeuristicNombreBlocksMalPlaces HeurisNBMP = new HeuristicNombreBlocksMalPlaces(goalState);
+        Planner astar = new AStarPlanner(initialState, actions, goal, HeurisNBMP);
+        PlannerTest(astar, "AStar");
     }
 
     private static void PlannerTest(Planner planner, String nom) {
@@ -71,6 +74,10 @@ public class MainPlanner {
         System.out.println("Plan : " + planner.plan());
         System.out.println("Temps d'execution : " + (System.currentTimeMillis() - startTime) + " ms");
         System.out.println("Nombre de noeuds : " + planner.getNombresNoeuds());
+        if (planner instanceof AStarPlanner) {
+            System.out.println("Nombre blocs mal placés : " + ((AStarPlanner) planner).getHeuristic().estimate(planner.getInitialState()));
+        }
         System.out.println("################# FIN TEST "+ nom +" #################");
+
     }
 }

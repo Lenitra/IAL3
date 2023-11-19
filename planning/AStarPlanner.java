@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.PriorityBlockingQueue;
 
+import blocksworld.HeuristicNombreBlocksMalPlaces;
 import modelling.Variable;
 
 //Implémentation d'un planificateur basé sur l'algorithme A*
@@ -131,5 +132,9 @@ public class AStarPlanner implements Planner {
      */
     public int getNombresNoeuds() {
         return nombresNoeuds;
+    }
+
+    public HeuristicNombreBlocksMalPlaces getHeuristic() {
+        return (HeuristicNombreBlocksMalPlaces) heuristic;
     }
 }
