@@ -11,7 +11,7 @@ public class MainConstraintes {
     
         boolean allSatisfied = true;
 
-        System.out.println(" ################# TEST 1 #################");
+        System.out.println(" ################# TEST Contraintes #################");
         allSatisfied = true;
         
         Map<Variable, Object> map1 = new HashMap<>();
@@ -78,7 +78,7 @@ public class MainConstraintes {
         
         
         
-        System.out.println(" ################# TEST 2 #################");
+        System.out.println(" ################# TEST Contraintes #################");
         allSatisfied = true;
         
         Map<Variable, Object> map2 = new HashMap<>();
@@ -125,7 +125,7 @@ public class MainConstraintes {
         System.out.println(allSatisfied ? "valide" : "NOPE");
 
 
-        System.out.println(" ################# TEST 3 #################");
+        System.out.println(" ################# TEST Contraintes Croissantes #################");
         allSatisfied = true;
     
         // test de la contrainte croissante
@@ -173,7 +173,7 @@ public class MainConstraintes {
         System.out.println(allSatisfied ? "valide" : "NOPE");
 
 
-        System.out.println(" ################# TEST 4 #################");
+        System.out.println(" ################# TEST Regulary Constraint #################");
         allSatisfied = true;
 
         //test de la regulary constraint
