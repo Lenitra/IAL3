@@ -32,9 +32,9 @@ public class BWActions2 extends BlocksWorld {
     
             // BLOCK VERS PILE
             for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
-                for(int destipile = -1; destipile >= -numPiles; destipile--) {
+                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
                     if (block != sourceblock) {
-                        BlockOnPile(block, sourceblock, destipile);
+                        BlockOnPile(block, sourceblock, destiPile);
                     }
                 }
             }
@@ -49,13 +49,13 @@ public class BWActions2 extends BlocksWorld {
             }
 
             // BLOC SUR PILE VERS PILE
-        //     for(int sourcePile = 0; sourcePile < numBlocks; sourcePile++) {
-        //         for(int destiblock = 0; destiblock < numPiles; destiblock++) {
-        //             if (block != sourcePile || block != destiblock || sourcePile != destiblock) {
-        //                 BlockPileOnPile(block, sourcePile, destiblock);
-        //             }
-        //         }
-        //     }
+            for(int sourcePile = -1; sourcePile >= -numPiles; sourcePile--) {
+                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
+                    if (sourcePile != destiPile) {
+                        BlockPileOnPile(block, sourcePile, destiPile);
+                    }
+                }
+            }
         }
     }
     
@@ -72,8 +72,6 @@ public class BWActions2 extends BlocksWorld {
         //il faut que le bloc d'arrivée soit pas fixé
         precondition.put(new BooleanVariable("Fi"+destiblock), false);
 
-        // System.out.println("precon("+precondition.toString()+")");
-
         Map<Variable, Object> effect = new HashMap<>();
         //le bloc est sur le bloc d'arrivée
         effect.put(varon, destiblock);
@@ -84,7 +82,7 @@ public class BWActions2 extends BlocksWorld {
         //le bloc de base n'est plus occupé
         effect.put(new BooleanVariable("Fi"+sourceblock), false);
 
-        System.out.println("BlockOnBlock("+block+","+sourceblock+","+destiblock+")");
+        // System.out.println("BlockOnBlock("+block+","+sourceblock+","+destiblock+")");
 
         Action action = new BasicAction(precondition, effect, 1);
         actions.add(action);
@@ -105,7 +103,6 @@ public class BWActions2 extends BlocksWorld {
 
         //effet de l'action
         Map<Variable, Object> effect = new HashMap<>();
-
         //le bloc est sur la pile d'arrivée
         effect.put(varon, destiPile);
         //le bloc n'est pas fixé
@@ -115,7 +112,7 @@ public class BWActions2 extends BlocksWorld {
         //le bloc de base n'est plus occupé
         effect.put(new BooleanVariable("Fi"+sourceblock), false);
 
-        System.err.println("BlockOnPile("+block+","+sourceblock+","+destiPile+")");
+        // System.err.println("BlockOnPile("+block+","+sourceblock+","+destiPile+")");
 
         Action action = new BasicAction(precondition, effect, 1);
         actions.add(action);
@@ -154,19 +151,22 @@ public class BWActions2 extends BlocksWorld {
     }
 
 
-    public void BlockPileOnPile(int block, int sourceblock, int destiblock){
+    public void BlockPileOnPile(int block, int sourcePile, int destiPile){
         Map<Variable, Object> precondition = new HashMap<>();
-        Variable varon = new Variable("On" + block, Set.of(sourceblock));
+        Variable varon = new Variable("On" + block, Set.of(sourcePile));
 
-        precondition.put(varon,sourceblock);
+        precondition.put(varon,sourcePile);
         precondition.put(new BooleanVariable("Fi"+block), false);
-        precondition.put(new BooleanVariable("Fr"+sourceblock), true);
-        precondition.put(new BooleanVariable("Fr"+destiblock), false);
+        precondition.put(new BooleanVariable("Fr"+ -sourcePile), false);
+        precondition.put(new BooleanVariable("Fr"+ -destiPile), true);
 
         Map<Variable, Object> effect = new HashMap<>();
-        effect.put(varon, destiblock);
+        effect.put(varon, destiPile);
         effect.put(new BooleanVariable("Fi"+block), false);
-        effect.put(new BooleanVariable("Fr"+sourceblock), false);
+        effect.put(new BooleanVariable("Fr"+ -sourcePile), true);
+        effect.put(new BooleanVariable("Fr"+ -destiPile), false);
+
+        System.err.println("BlockPileOnPile("+block+","+sourcePile+","+ destiPile+")");
 
         Action action = new BasicAction(precondition, effect, 1);
         actions.add(action);
