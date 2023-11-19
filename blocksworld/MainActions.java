@@ -6,7 +6,6 @@ import java.util.*;
 import modelling.BooleanVariable;
 import modelling.Variable;
 import planning.Action;
-import planning.DijkstraPlanner;
 
 public class MainActions {
     

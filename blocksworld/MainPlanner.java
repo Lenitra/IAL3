@@ -13,36 +13,36 @@ public class MainPlanner {
         Map<Variable, Object> initialState = new HashMap<>();
         Map<Variable, Object> goalState = new HashMap<>();
 
-        Variable on0 = new Variable("on0", Set.of(-1,-2,-3,1, 2));
-        Variable on1 = new Variable("on1", Set.of(-1,-2,-3,0, 2));
-        Variable on2 = new Variable("on2", Set.of(-1, -2,-3, 0, 1));
-        Variable fi2 = new BooleanVariable("fi2");
-        Variable fi0 = new BooleanVariable("fi0");
-        Variable fi1 = new BooleanVariable("fi1");
-        Variable frm1 = new BooleanVariable("fr1");
-        Variable frm2 = new BooleanVariable("fr2");
-        Variable frm3 = new BooleanVariable("fr3");
+        Variable On0 = new Variable("On0", Set.of(-1,-2,-3,1, 2));
+        Variable On1 = new Variable("On1", Set.of(-1,-2,-3,0, 2));
+        Variable On2 = new Variable("On2", Set.of(-1, -2,-3, 0, 1));
+        Variable Fi2 = new BooleanVariable("Fi2");
+        Variable Fi0 = new BooleanVariable("Fi0");
+        Variable Fi1 = new BooleanVariable("Fi1");
+        Variable Fr1 = new BooleanVariable("Fr1");
+        Variable Fr2 = new BooleanVariable("Fr2");
+        Variable Fr3 = new BooleanVariable("Fr3");
         // Création de l'état initial
-        initialState.put(on0, -1);
-        initialState.put(on1, -2);
-        initialState.put(on2, 0);
-        initialState.put(fi2, false);
-        initialState.put(frm1, false);
-        initialState.put(frm2, false);
-        initialState.put(fi1, false);
-        initialState.put(fi0, true);
-        initialState.put(frm3, true);
+        initialState.put(On0, -1);
+        initialState.put(On1, -2);
+        initialState.put(On2, 0);
+        initialState.put(Fi2, false);
+        initialState.put(Fr1, false);
+        initialState.put(Fr2, false);
+        initialState.put(Fi1, false);
+        initialState.put(Fi0, true);
+        initialState.put(Fr3, true);
 
         // Création du goal
-        goalState.put(on2, -3);
-        goalState.put(on1, 2);
-        goalState.put(on0, 1);
-        goalState.put(fi0, false);
-        goalState.put(fi1, true);
-        goalState.put(fi2, true);
-        goalState.put(frm1, true);
-        goalState.put(frm2, true);
-        goalState.put(frm3, false);
+        goalState.put(On2, -3);
+        goalState.put(On1, 2);
+        goalState.put(On0, 1);
+        goalState.put(Fi0, false);
+        goalState.put(Fi1, true);
+        goalState.put(Fi2, true);
+        goalState.put(Fr1, true);
+        goalState.put(Fr2, true);
+        goalState.put(Fr3, false);
 
         Goal goal = new BasicGoal(goalState);
 
@@ -56,6 +56,9 @@ public class MainPlanner {
 
         Planner bfs = new BFSPlanner(initialState, actions, goal);
         PlannerTest(bfs, "BFS");
+
+        Planner djikstra = new DijkstraPlanner(initialState, actions, goal);
+        PlannerTest(djikstra, "Dijkstra");
 
     }
 
