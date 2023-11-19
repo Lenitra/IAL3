@@ -6,6 +6,7 @@ import java.util.*;
 import modelling.BooleanVariable;
 import modelling.Variable;
 import planning.Action;
+import planning.DijkstraPlanner;
 
 public class MainActions {
     
@@ -22,6 +23,9 @@ public class MainActions {
 
         System.out.println("Test BlockPileToPile :");
         testBlockPileToPile(1,2);
+
+        //test des plans pour le monde des blocs avec A*
+        // testBlockWoldPlan(6, 4);
     }
     
     //--------------------------------------------------------------------------------
@@ -257,5 +261,30 @@ public class MainActions {
             System.out.println(entry.getKey().toString()+":"+ entry.getValue());
         }
     }
+
+    //--------------------------------------------------------------------------------
+    //TEST PLAN BLOCKWORLD
+    // private static void testBlockWoldPlan(int numBlocks, int numPiles) {
+    //     // Création des actions pour le monde des blocs (BlockPileToPile)
+    //     BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
+    //     Set<Action> allActions = blockWorldActions.getActions();
+    //     System.out.println(allActions.size());
+
+    //     // Création d'un état initial
+    //     Map<Variable, Object> initialState = createInitialStateBlockWoldPlan(numBlocks, numPiles);
+
+    //     // Affichage de l'état initial
+    //     System.out.println("État initial pour BlockWoldPlan :");
+    //     printState(initialState);
+    //     System.out.println();
+
+    //     // Création d'un état final (but)
+    //     Map<Variable, Object> goalState = createGoalStateBlockWoldPlan(numBlocks, numPiles);
+    //     System.out.println("État final :");
+    //     printState(goalState);
+    //     System.out.println();
+
+    //    DijkstraPlanner planner = new DijkstraPlanner(initialState,allActions,goalState);
+    // }
 
 }

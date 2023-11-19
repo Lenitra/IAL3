@@ -7,7 +7,7 @@ import planning.*;
 
 public class BWActions extends BlocksWorld {
 
-    private int numBlocks;
+    private int numBlocks;  
     private int numPiles;
     private Set<Action> actions = new HashSet<Action>();
 
