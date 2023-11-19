@@ -1,210 +1,184 @@
 package blocksworld;
 
 import java.util.*;
+
 import modelling.*;
 import planning.*;
 
-
-/**
- * BWPlanner
- */
 public class BWActions extends BlocksWorld {
 
-    private int nbBlocks;
-    private int nbPiles;
+    private int numBlocks;
+    private int numPiles;
+    private Set<Action> actions = new HashSet<Action>();
 
-
-    // constructor
     public BWActions(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
-        this.nbBlocks = nbBlocks;
-        this.nbPiles = nbPiles;
+        this.numBlocks = nbBlocks;
+        this.numPiles = nbPiles;
+        GenerateActions();
+    }
+
+    private void GenerateActions() {
         
+        for (int block = 0; block < numBlocks; block++) {
+            for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
+                // BLOCK VERS BLOCK
+                for(int destiblock = 0; destiblock < numBlocks; destiblock++) {
+                    if (block != sourceblock && block != destiblock && sourceblock != destiblock) {
+                        BlockToBlock(block, sourceblock, destiblock);
+                    }
+                }
+    
+                // BLOCK VERS PILE
+                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
+                    if (block != sourceblock) {
+                        BlockToPile(block, sourceblock, destiPile);
+                    }
+                }
+            }
+
+            for(int sourcePile = -1; sourcePile >= -numPiles; sourcePile--) {
+                // BLOC SUR PILE VERS BLOC
+                for(int destiblock = 0; destiblock < numBlocks; destiblock++) {
+                    if (block != destiblock) {
+                        BlockPileToBlock(block, sourcePile, destiblock);
+                    }
+                }
+
+                // BLOC SUR PILE VERS PILE
+                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
+                    if (sourcePile != destiPile) {
+                        BlockPileToPile(block, sourcePile, destiPile);
+                    }
+                }
+            }
+        }
+    }
+    
+    public void BlockToBlock(int block, int sourceblock, int destiblock){
+        Map<Variable, Object> precondition = new HashMap<>();
+        
+        Variable varon = new Variable("On" + block, Set.of(sourceblock)); 
+        //il faut que le bloc soit sur un autre bloc
+        precondition.put(varon, sourceblock);
+        //il faut que le bloc ne soit pas fixé
+        precondition.put(new BooleanVariable("Fi"+block), false);
+        //il faut que le bloc de base soit fixé
+        precondition.put(new BooleanVariable("Fi"+sourceblock), true);
+        //il faut que le bloc d'arrivée soit pas fixé
+        precondition.put(new BooleanVariable("Fi"+destiblock), false);
+
+        //effet de l'action
+        Map<Variable, Object> effect = new HashMap<>();
+        //le bloc est sur le bloc d'arrivée
+        effect.put(varon, destiblock);
+        //le bloc n'est pas fixé
+        effect.put(new BooleanVariable("Fi"+block), false);
+        //le bloc d'arrivée est fixé
+        effect.put(new BooleanVariable("Fi"+destiblock), true);
+        //le bloc de base n'est plus occupé
+        effect.put(new BooleanVariable("Fi"+sourceblock), false);
+
+        // System.out.println("BlockToBlock("+block+","+sourceblock+","+destiblock+")");
+
+        Action action = new BasicAction(precondition, effect, 1);
+        actions.add(action);
+    }
+
+    public void BlockToPile(int block, int sourceblock, int destiPile){
+        Variable varon = new Variable("On" + block, Set.of(sourceblock));
+        
+        //précondition pour que l'action se produise 
+        Map<Variable, Object> precondition = new HashMap<>();
+        //il faut que le bloc soit sur un autre bloc
+        precondition.put(varon,sourceblock);
+        //il faut que le bloc ne soit pas fixé
+        precondition.put(new BooleanVariable("Fi"+block), false);
+        //il faut que le bloc de base soit fixe
+        precondition.put(new BooleanVariable("Fi"+sourceblock), true);
+        //il faut que la pile d'arrivée soit libre
+        precondition.put(new BooleanVariable("Fr"+ -destiPile), true);
+
+        //effet de l'action
+        Map<Variable, Object> effect = new HashMap<>();
+        //le bloc est sur la pile d'arrivée
+        effect.put(varon, destiPile);
+        //le bloc n'est pas fixé
+        effect.put(new BooleanVariable("Fi"+block), false);
+        //la pile d'arrivée n'est plus libre
+        effect.put(new BooleanVariable("Fr"+ -destiPile), false);
+        //le bloc de base n'est plus occupé
+        effect.put(new BooleanVariable("Fi"+sourceblock), false);
+
+        // System.err.println("BlockToPile("+block+","+sourceblock+","+destiPile+")");
+
+        Action action = new BasicAction(precondition, effect, 1);
+        actions.add(action);
+    }
+
+    public void BlockPileToBlock(int block, int sourcePile, int destiblock){
+        Variable varon = new Variable("On" + block, Set.of(sourcePile));
+        
+        //précondition pour que l'action se produise
+        Map<Variable, Object> precondition = new HashMap<>();
+        //il faut que le bloc soit sur une pile
+        precondition.put(varon,sourcePile);
+        //il faut que le bloc ne soit pas fixé
+        precondition.put(new BooleanVariable("Fi"+block), false);
+        //il faut que le bloc d'arrive ne soit pas fixée
+        precondition.put(new BooleanVariable("Fi"+destiblock), false);
+        //il faut que la pile de base ne soit pas libre
+        precondition.put(new BooleanVariable("Fr"+ -sourcePile), false);
+
+        //effet de l'action
+        Map<Variable, Object> effect = new HashMap<>();
+        //le bloc est sur le bloc d'arrivée
+        effect.put(varon, destiblock);
+        //le bloc n'est pas fixé
+        effect.put(new BooleanVariable("Fi"+block), false);
+        //le bloc d'arrivée est fixé
+        effect.put(new BooleanVariable("Fi"+destiblock), true);
+        //la pile de base est libre
+        effect.put(new BooleanVariable("Fr"+ -sourcePile), true);
+        
+        // System.err.println("BlockPileToBlock("+block+","+sourcePile+","+ destiblock+")");
+
+        Action action = new BasicAction(precondition, effect, 1);
+        actions.add(action);
     }
 
 
-    // get all actions
-    public ArrayList<Action> allActions() {
-        ArrayList<Action> actions = new ArrayList<Action>();
-        BWVariable variables = new BWVariable(this.nbBlocks, this.nbPiles); // On créé les variables
-        Set<Variable> variablesOn = variables.getOnb();
-        Set<Variable> variablesFixed = variables.getFixedb();
-        Set<Variable> variablesFree = variables.getFreep();
+    public void BlockPileToPile(int block, int sourcePile, int destiPile){
+        Variable varon = new Variable("On" + block, Set.of(sourcePile));
+        //précondition pour que l'action se produise
+        Map<Variable, Object> precondition = new HashMap<>();
+        //il faut que le bloc soit sur une pile
+        precondition.put(varon,sourcePile);
+        //il faut que le bloc ne soit pas fixé
+        precondition.put(new BooleanVariable("Fi"+block), false);
+        //il faut que la pile de base ne soit pas libre
+        precondition.put(new BooleanVariable("Fr"+ -sourcePile), false);
+        //il faut que la pile d'arrivée soit libre
+        precondition.put(new BooleanVariable("Fr"+ -destiPile), true);
 
-        // On créé les actions
+        //effet de l'action
+        Map<Variable, Object> effect = new HashMap<>();
+        //le bloc est sur la pile d'arrivée
+        effect.put(varon, destiPile);
+        //la pile d'arrivée n'est plus libre
+        effect.put(new BooleanVariable("Fr"+ -sourcePile), true);
+        //la pile de base est libre
+        effect.put(new BooleanVariable("Fr"+ -destiPile), false);
 
-        // TYPE1
-        for (Variable bk1 : variablesOn) {
-            for (Variable bk2 : variablesOn) {
-                for (Variable bk3: variablesOn){
-                    // On vériifie que les blocs sont différents
-                    if (bk1.getName().equals(bk2.getName())) { 
-                        continue;
-                    }
-                    if (bk1.getName().equals(bk3.getName())) {
-                        continue;
-                    }
-                    if (bk2.getName().equals(bk3.getName())) { 
-                        continue;
-                    }
+        System.err.println("BlockPileToPile("+block+","+sourcePile+","+ destiPile+")");
 
-                    
-                    // on récupère les numéros des blocs
-                    int num1 = Integer.parseInt(bk1.getName().substring(2));
-                    int num2 = Integer.parseInt(bk2.getName().substring(2));
-                    int num3 = Integer.parseInt(bk3.getName().substring(2));
+        Action action = new BasicAction(precondition, effect, 1);
+        actions.add(action);
+    }
 
-                    
-                    
-                    // precondition :
-                    // On num1 = num2
-                    // Fi num1 = false
-                    // Fi num3 = false
-                    Map <Variable, Object> precondition = new HashMap<>();
-                    precondition.put(bk1, num2);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num3], false);
-                    
-                    
-                    
-                    // effects : 
-                    // Fi num2 = false
-                    // Fi num3 = true
-                    // On num1.value = num3
-                    Map <Variable, Object> effect = new HashMap<>();
-                    effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
-                    effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num3], true);
-                    effect.put(bk1, num3);
-
-                    // On créé l'action
-                    BasicAction action = new BasicAction(precondition, effect, 1);
-                    actions.add(action);
-                    
-                    
-                }
-            }
-        }
-
-        // TYPE2
-        for (Variable bk1: variablesOn){
-            for (Variable bk2: variablesOn){
-                for (Variable p1: variablesFree){
-                    if (bk1.getName().equals(bk2.getName())) { 
-                        continue;
-                    }
-
-                    int num1 = Integer.parseInt(bk1.getName().substring(2));
-                    int num2 = Integer.parseInt(bk2.getName().substring(2));
-                    int num3 = Integer.parseInt(p1.getName().substring(2));
-
-                    // precondition :
-                    // On num1 = num2
-                    // Fi num1 = false
-                    // Fr num3 = true
-                    Map <Variable, Object> precondition = new HashMap<>();
-                    precondition.put(bk1, num2);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
-                    precondition.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], true);
-
-                    // effects :
-                    // Fi num2 = false
-                    // Fr num3 = false
-                    // On num1.value = num3
-                    Map <Variable, Object> effect = new HashMap<>();
-                    effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
-                    effect.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], false);
-                    effect.put(bk1, num3);
-
-                    // On créé l'action
-                    BasicAction action = new BasicAction(precondition, effect, 1);
-                    actions.add(action);
-                }
-            }
-        }
-        
-
-        // TYPE3
-        for (Variable bk1: variablesOn){
-            for (Variable bk2: variablesOn){
-                for (Variable p1: variablesFree){
-                    if (bk1.getName().equals(bk2.getName())) { 
-                        continue;
-                    }
-
-                    int num1 = Integer.parseInt(bk1.getName().substring(2));
-                    int num2 = Integer.parseInt(bk2.getName().substring(2));
-                    int num3 = Integer.parseInt(p1.getName().substring(2));
-
-                    // precondition :
-                    // On num1 = num3
-                    // Fi num1 = false
-                    // Fi num2 = false
-                    Map <Variable, Object> precondition = new HashMap<>();
-                    precondition.put(bk1, num3);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
-
-                    // effects :
-                    // Fr num3 = true
-                    // Fi num2 = false
-                    // On num1.value = num2
-                    Map <Variable, Object> effect = new HashMap<>();
-                    effect.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], true);
-                    effect.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num2], false);
-                    effect.put(bk1, num2);
-
-                    // On créé l'action
-                    BasicAction action = new BasicAction(precondition, effect, 1);
-                    actions.add(action);
-                }
-            }
-        }
-
-        // TYPE4
-        for (Variable bk1: variablesOn){
-            for (Variable p1: variablesFree){
-                for (Variable p2: variablesFree){
-                    if (p1.getName().equals(p2.getName())) { 
-                        continue;
-                    }
-
-                    int num1 = Integer.parseInt(bk1.getName().substring(2));
-                    int num2 = Integer.parseInt(p1.getName().substring(2));
-                    int num3 = Integer.parseInt(p2.getName().substring(2));
-
-                    // precondition :
-                    // On num1 = num2
-                    // Fi num1 = false
-                    // Fr num3 = true
-                    Map <Variable, Object> precondition = new HashMap<>();
-                    precondition.put(bk1, num2);
-                    precondition.put(variablesFixed.toArray(new Variable[variablesFixed.size()])[num1], false);
-                    precondition.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], true);
-
-                    // effects :
-                    // Fr num2 = true
-                    // Fr num3 = false
-                    // On num1.value = num3
-                    Map <Variable, Object> effect = new HashMap<>();
-                    effect.put(variablesFree.toArray(new Variable[variablesFree.size()])[num2], true);
-                    effect.put(variablesFree.toArray(new Variable[variablesFree.size()])[num3], false);
-                    effect.put(bk1, num3);
-
-                    // On créé l'action
-                    BasicAction action = new BasicAction(precondition, effect, 1);
-                    actions.add(action);
-
-                }
-            }
-        }
-
-    
-
+    public Set<Action> getActions() {
         return actions;
     }
 
-    // get allactions of actions
-    public Set<Action> getActions() {
-        return new HashSet<Action>(allActions());
-    }
+
 }

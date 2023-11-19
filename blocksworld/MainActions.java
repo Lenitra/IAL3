@@ -11,54 +11,46 @@ public class MainActions {
     
     public static void main(String[] args) {
 
-        // Affichage des actions générées
-        // System.out.println("Actions générées :");
-        // for (Action action : allActions) {
-        //     System.out.println(action);
-        // }
-        // System.out.println();
-
-        System.out.println("Test BlockOnPile :");
-        testBlockOnPile(2,2);
+        System.out.println("Test BlockToPile :");
+        testBlockToPile(2,2);
  
-        System.out.println("Test BlockOnBlock :");
-        testBlockOnBlock(3,2);
+        System.out.println("Test BlockToBlock :");
+        testBlockToBlock(3,2);
 
-        System.out.println("Test BlockPileOnBlock :");
-        testBlockPileOnBlock(2,2);
+        System.out.println("Test BlockPileToBlock :");
+        testBlockPileToBlock(2,2);
 
-        System.out.println("Test BlockPileOnBlock :");
-        testBlockPileOnPile(1,2);
+        System.out.println("Test BlockPileToPile :");
+        testBlockPileToPile(1,2);
     }
     
     //--------------------------------------------------------------------------------
     //TEST BLOCK ON PILE
-    private static void testBlockOnPile(int numBlocks, int numPiles) {
-        // Paramètres pour le monde des blocs
-        // Création des actions pour le monde des blocs (BlockOnPile)
-        BWActions2 blockWorldActions = new BWActions2(numBlocks, numPiles);
+    private static void testBlockToPile(int numBlocks, int numPiles) {
+        // Création des actions pour le monde des blocs (BlockToPile)
+        BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
         Set<Action> allActions = blockWorldActions.getActions();
         System.out.println(allActions.size());
 
         // Création d'un état initial
-        Map<Variable, Object> initialState = createInitialStateBlockOnPile(numBlocks, numPiles);
+        Map<Variable, Object> initialState = createInitialStateBlockToPile(numBlocks, numPiles);
 
         // Affichage de l'état initial
-        System.out.println("État initial pour BlockOnPile :");
+        System.out.println("État initial pour BlockToPile :");
         printState(initialState);
         System.out.println();
 
-        // Test des actions avec l'état initial pour BlockOnPile
+        // Test des actions avec l'état initial pour BlockToPile
         testActions(initialState, allActions);
 
         // Création d'un état final (but)
-        Map<Variable, Object> goalState = createGoalStateBlockOnPile(numBlocks, numPiles);
+        Map<Variable, Object> goalState = createGoalStateBlockToPile(numBlocks, numPiles);
         System.out.println("État final :");
         printState(goalState);
         System.out.println();
     }
 
-    private static Map<Variable, Object> createInitialStateBlockOnPile(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createInitialStateBlockToPile(int numBlocks, int numPiles) {
         Map<Variable, Object> initialState = new HashMap<>();
 
         initialState.put(new Variable("On0", Set.of(0, -1, 1)), 1);
@@ -71,7 +63,7 @@ public class MainActions {
         return initialState;
     }
 
-    private static Map<Variable, Object> createGoalStateBlockOnPile(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createGoalStateBlockToPile(int numBlocks, int numPiles) {
         Map<Variable, Object> goalState = new HashMap<>();
 
         goalState.put(new Variable("On0", Set.of(-1)), -1);
@@ -86,32 +78,31 @@ public class MainActions {
 
     //--------------------------------------------------------------------------------
     //TEST BLOCK ON BlOCK
-    private static void testBlockOnBlock(int numBlocks, int numPiles) {
-        // Paramètres pour le monde des blocs
-        // Création des actions pour le monde des blocs (BlockOnPile)
-        BWActions2 blockWorldActions = new BWActions2(numBlocks, numPiles);
+    private static void testBlockToBlock(int numBlocks, int numPiles) {
+        // Création des actions pour le monde des blocs (BlockToBlock)
+        BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
         Set<Action> allActions = blockWorldActions.getActions();
         System.out.println(allActions.size());
 
         // Création d'un état initial
-        Map<Variable, Object> initialState = createInitialStateBlockOnBlock(numBlocks, numPiles);
+        Map<Variable, Object> initialState = createInitialStateBlockToBlock(numBlocks, numPiles);
 
         // Affichage de l'état initial
-        System.out.println("État initial pour BlockOnBlock :");
+        System.out.println("État initial pour BlockToBlock :");
         printState(initialState);
         System.out.println();
 
-        // Test des actions avec l'état initial pour BlockOnPile
+        // Test des actions avec l'état initial pour BlockToBlock
         testActions(initialState, allActions);
 
         // Création d'un état final (but)
-        Map<Variable, Object> goalState = createGoalStateBlockOnBlock(numBlocks, numPiles);
+        Map<Variable, Object> goalState = createGoalStateBlockToBlock(numBlocks, numPiles);
         System.out.println("État final :");
         printState(goalState);
         System.out.println();
     }
 
-    private static Map<Variable, Object> createInitialStateBlockOnBlock(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createInitialStateBlockToBlock(int numBlocks, int numPiles) {
         Map<Variable, Object> initialState = new HashMap<>();
 
         initialState.put(new Variable("On0", Set.of(0,-1,-2, 1,2)), -1);
@@ -126,7 +117,7 @@ public class MainActions {
         return initialState;
     }
 
-    private static Map<Variable, Object> createGoalStateBlockOnBlock(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createGoalStateBlockToBlock(int numBlocks, int numPiles) {
         Map<Variable, Object> goalState = new HashMap<>();
 
         goalState.put(new Variable("On0", Set.of(0,-1,-2, 1,2)), -1);
@@ -143,32 +134,31 @@ public class MainActions {
 
     //--------------------------------------------------------------------------------
     //TEST BLOCK PILE ON BLOCK
-    private static void testBlockPileOnBlock(int numBlocks, int numPiles) {
-        // Paramètres pour le monde des blocs
-        // Création des actions pour le monde des blocs (BlockPileOnBlock)
-        BWActions2 blockWorldActions = new BWActions2(numBlocks, numPiles);
+    private static void testBlockPileToBlock(int numBlocks, int numPiles) {
+        // Création des actions pour le monde des blocs (BlockPileToBlock)
+        BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
         Set<Action> allActions = blockWorldActions.getActions();
         System.out.println(allActions.size());
 
         // Création d'un état initial
-        Map<Variable, Object> initialState = createInitialStateBlockPileOnBlock(numBlocks, numPiles);
+        Map<Variable, Object> initialState = createInitialStateBlockPileToBlock(numBlocks, numPiles);
 
         // Affichage de l'état initial
-        System.out.println("État initial pour BlockPileOnBlock :");
+        System.out.println("État initial pour BlockPileToBlock :");
         printState(initialState);
         System.out.println();
 
-        // Test des actions avec l'état initial pour BlockPileOnBlock
+        // Test des actions avec l'état initial pour BlockPileToBlock
         testActions(initialState, allActions);
 
         // Création d'un état final (but)
-        Map<Variable, Object> goalState = createGoalStateBlockPileOnBlock(numBlocks, numPiles);
+        Map<Variable, Object> goalState = createGoalStateBlockPileToBlock(numBlocks, numPiles);
         System.out.println("État final :");
         printState(goalState);
         System.out.println();
     }
 
-    private static Map<Variable, Object> createInitialStateBlockPileOnBlock(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createInitialStateBlockPileToBlock(int numBlocks, int numPiles) {
         Map<Variable, Object> initialState = new HashMap<>();
 
         initialState.put(new Variable("On0", Set.of(0, -1, -2, 1)), -1);
@@ -181,7 +171,7 @@ public class MainActions {
         return initialState;
     }
 
-    private static Map<Variable, Object> createGoalStateBlockPileOnBlock(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createGoalStateBlockPileToBlock(int numBlocks, int numPiles) {
         Map<Variable, Object> goalState = new HashMap<>();
 
         goalState.put(new Variable("On0", Set.of(0, -1, -2, 1)), 1);
@@ -196,32 +186,31 @@ public class MainActions {
 
     //--------------------------------------------------------------------------------
     //TEST BlOCK PILE ON PILE
-    private static void testBlockPileOnPile(int numBlocks, int numPiles) {
-        // Paramètres pour le monde des blocs
-        // Création des actions pour le monde des blocs (BlockPileOnPile)
-        BWActions2 blockWorldActions = new BWActions2(numBlocks, numPiles);
+    private static void testBlockPileToPile(int numBlocks, int numPiles) {
+        // Création des actions pour le monde des blocs (BlockPileToPile)
+        BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
         Set<Action> allActions = blockWorldActions.getActions();
         System.out.println(allActions.size());
 
         // Création d'un état initial
-        Map<Variable, Object> initialState = createInitialStateBlockPileOnPile(numBlocks, numPiles);
+        Map<Variable, Object> initialState = createInitialStateBlockPileToPile(numBlocks, numPiles);
 
         // Affichage de l'état initial
-        System.out.println("État initial pour BlockPileOnPile :");
+        System.out.println("État initial pour BlockPileToPile :");
         printState(initialState);
         System.out.println();
 
-        // Test des actions avec l'état initial pour BlockPileOnPile
+        // Test des actions avec l'état initial pour BlockPileToPile
         testActions(initialState, allActions);
 
         // Création d'un état final (but)
-        Map<Variable, Object> goalState = createGoalStateBlockPileOnPile(numBlocks, numPiles);
+        Map<Variable, Object> goalState = createGoalStateBlockPileToPile(numBlocks, numPiles);
         System.out.println("État final :");
         printState(goalState);
         System.out.println();
     }
 
-    private static Map<Variable, Object> createInitialStateBlockPileOnPile(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createInitialStateBlockPileToPile(int numBlocks, int numPiles) {
         Map<Variable, Object> initialState = new HashMap<>();
 
         initialState.put(new Variable("On0", Set.of(0, -1, -2,-3)), -1);
@@ -232,7 +221,7 @@ public class MainActions {
         return initialState;
     }
 
-    private static Map<Variable, Object> createGoalStateBlockPileOnPile(int numBlocks, int numPiles) {
+    private static Map<Variable, Object> createGoalStateBlockPileToPile(int numBlocks, int numPiles) {
         Map<Variable, Object> goalState = new HashMap<>();
 
         goalState.put(new Variable("On0", Set.of(0, -1, -2)), -2);
