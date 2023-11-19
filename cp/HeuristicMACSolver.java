@@ -36,7 +36,7 @@ public class HeuristicMACSolver extends AbstractSolver {
 
     @Override
     public Map<Variable, Object> solve() {
-        List<Variable> variables = new ArrayList<>(this.variables); // on cree une liste de variables
+        Set<Variable> variables = new HashSet<>(this.variables); // on cree une liste de variables
         Map<Variable, Set<Object>> domains = new HashMap<Variable, Set<Object>>(); // on cree un dictionnaire de variables et de domaines
         for (Variable var : this.variables) { // pour chaque variable
             domains.put(var, var.getDomain()); // on ajoute la variable et son domaine au dictionnaire
@@ -51,8 +51,8 @@ public class HeuristicMACSolver extends AbstractSolver {
      * @param domains ensemble des domaines
      * @return une solution au probleme CSP
      */
-    public Map<Variable, Object> MAC(Map<Variable, Object> assignment, List<Variable> varList, Map<Variable, Set<Object>> domains) {
-        List<Variable> variables = new ArrayList<>(varList); // copie de la liste des variables
+    public Map<Variable, Object> MAC(Map<Variable, Object> assignment, Set<Variable> varList, Map<Variable, Set<Object>> domains) {
+        Set<Variable> variables = new HashSet<>(varList); // copie de la liste des variables
         ArcConsistency ac = new ArcConsistency(this.constraints); // création d'un objet de type ArcConsistency
         if (variables.isEmpty()) { // si la liste des variables est vide
             return assignment; // on retourne l'assignation
@@ -61,11 +61,14 @@ public class HeuristicMACSolver extends AbstractSolver {
             if(!ac.ac1(domains)){ // si l'arc-consistance n'est pas respectée
                 return null; // on retourne null
             }
-            Variable var = varHeuristic.best(this.variables, domains); // on récupère la meilleure variable selon l'heuristique
+            
+            Variable var = varHeuristic.best(variables, domains); // on récupère la meilleure variable selon l'heuristique
             variables.remove(var); // on enlève la variable de la liste des variables à traiter parce qu'on la traite maintenant
+            
             for(Object value :domains.get(var)){ // pour chaque valeur de la variable
                 Map<Variable, Object> N = assignment; // on crée une nouvelle assignation
                 N.put(var, value); // on ajoute la valeur à l'assignation
+                
                 if(isConsistent(N)){ // si l'assignation est consistante
                     Map<Variable, Object> R = MAC(N, variables, domains); // on applique MAC sur l'assignation
                     if(R != null){
