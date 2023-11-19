@@ -61,7 +61,6 @@ public class HeuristicMACSolver extends AbstractSolver {
             if(!ac.ac1(domains)){ // si l'arc-consistance n'est pas respectée
                 return null; // on retourne null
             }
-            
             Variable var = varHeuristic.best(variables, domains); // on récupère la meilleure variable selon l'heuristique
             variables.remove(var); // on enlève la variable de la liste des variables à traiter parce qu'on la traite maintenant
             
