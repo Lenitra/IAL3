@@ -1,4 +1,4 @@
-package blocksworld;
+
 
 public class BWExtractDatamining extends BWVariable {
     

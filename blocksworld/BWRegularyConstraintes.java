@@ -1,51 +1,43 @@
-package blocksworld;
-
+import modelling.*;
 import java.util.*;
 
-import modelling.*;
-
-public class BWRegularyConstraintes extends BWConstraintes{
-
-    // liste des contraintes
-    protected Set<Constraint> constraints = new HashSet<>();
-    protected int nbBlocks;
-    protected int nbPiles;
-
-    public BWRegularyConstraintes(int nbBlocks, int nbPiles) {
-        super(nbBlocks, nbPiles);
-        this.nbBlocks = nbBlocks;
-        this.nbPiles = nbPiles;
-        RegularyConstraint(); 
+public class BWRegularyConstraintes extends BWConstraintes {
+    
+    public BWRegularyConstraintes(int block, int pile) {
+        super(block, pile);
     }
 
-    public void RegularyConstraint() {
-        for (Variable Oni : bw.getOnb()) {
+    @Override
+    public Set<Constraint> allConstraints() {
+        Set<Constraint> resultat = super.allConstraints(); // On récupère les contraintes de la classe parente
 
-            for(Variable Onj : bw.getOnb()) {
+        BWVariable variables = new BWVariable(this.nbBlocks, this.nbPiles); // On créé les variables
 
-                int i = bw.getIndex(Oni);
-                int j = bw.getIndex(Onj);
-                int k = j - (i - j);
+        // Obtention des variables de type "On"
+        Set<Variable> variablesOn = variables.getOnb();
 
-                if (i != j) {
-                    Set<Object> Domain_i = new HashSet<>();
-                    Domain_i.add(j);
-                    Set<Object> Domain_j = new HashSet<>(bw.nbPiles);
+        for (Variable variable1 : variablesOn) {
+            int blockNum1 = Integer.parseInt(variable1.getName().substring(2)); // Numéro du bloc de la variable1
 
-                    if(k >= 0 && k < nbBlocks) {
-                        Domain_j.add(k);
+            for (Variable variable2 : variablesOn) {
+                int blockNum2 = Integer.parseInt(variable2.getName().substring(2)); // Numéro du bloc de la variable2
+
+                // Ajout d'une implication pour la régularité
+                // si on1 = blockNum1 alors on2 != blockNum1
+                if (blockNum1 != blockNum2) {
+                    Set<Object> valeurs = new HashSet<>();
+                    int ecart = blockNum2*2 - blockNum1;
+                    valeurs.add(ecart);
+                    
+                    for(int i = 1; i <= nbPiles; i++) {
+                        valeurs.add(-i);
                     }
-
-                    Constraint c1 = new Implication(Oni, Domain_i, Onj, Domain_j);
-                    constraints.add(c1);
+                    Constraint constraint = new Implication(variable1, Set.of(blockNum2), variable2, valeurs);
+                    resultat.add(constraint);
                 }
             }
         }
-    }
 
-    
-    public Set<Constraint> getConstraints() {
-        return this.constraints;
+        return resultat;
     }
-    
 }

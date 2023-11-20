@@ -1,4 +1,4 @@
-package blocksworld;
+
 
 import java.util.*;
 
@@ -178,47 +178,125 @@ public class MainConstraintes {
 
         //test de la regulary constraint
         Map<Variable, Object> map4 = new HashMap<>();
-        BWRegularyConstraintes bwc4 = new BWRegularyConstraintes(3, 1);
+        BWRegularyConstraintes bwc4 = new BWRegularyConstraintes(10, 4);
 
         for (Variable variable : bwc4.getBWVariable().getAllVars()) {
             String name4 = variable.getName();
             if (name4.equals("On0")) {
-                map4.put(variable, 1);
+                map4.put(variable, -2);
             }
         
             if (name4.equals("On1")) {
-                map4.put(variable, 2);
+                map4.put(variable, 3);
             }
         
             if (name4.equals("On2")) {
-                map4.put(variable, 0);
+                map4.put(variable, 9);
             }
             
+            if (name4.equals("On3")) {
+                map4.put(variable, 5);
+            }
+
+            if (name4.equals("On4")) {
+                map4.put(variable, 0);
+            }
+
+            if (name4.equals("On5")) {
+                map4.put(variable, 7);
+            }
+
+            if (name4.equals("On6")) {
+                map4.put(variable, -4);
+            }
+
+            if (name4.equals("On7")) {
+                map4.put(variable, -1);
+            }
+
+            if (name4.equals("On8")) {
+                map4.put(variable, 4);
+            }
+
+            if (name4.equals("On9")) {
+                map4.put(variable, -3);
+            }
+
+
+
             if (name4.equals("Fi0")) {
-                map4.put(variable, false);
+                map4.put(variable, true);
             }
             
             if (name4.equals("Fi1")) {
-                map4.put(variable, true);
+                map4.put(variable, false);
             }
 
             if(name4.equals("Fi2")) {
+                map4.put(variable, false);
+            }
+
+            if(name4.equals("Fi3")) {
                 map4.put(variable, true);
             }
 
+            if(name4.equals("Fi4")) {
+                map4.put(variable, true);
+            }
+
+            if(name4.equals("Fi5")) {
+                map4.put(variable, true);
+            }
+
+            if(name4.equals("Fi6")) {
+                map4.put(variable, false);
+            }
+
+            if(name4.equals("Fi7")) {
+                map4.put(variable, true);
+            }
+
+            if(name4.equals("Fi8")) {
+                map4.put(variable, false);
+            }
+
+            if(name4.equals("Fi9")) {
+                map4.put(variable, true);
+            }
+
+
+
+
+            // Free (piles)
             if(name4.equals("Fr-1")) {
+                map4.put(variable, false);
+            }
+            if(name4.equals("Fr-2")) {
+                map4.put(variable, false);
+            }
+            if(name4.equals("Fr-3")) {
+                map4.put(variable, false);
+            }
+            if(name4.equals("Fr-4")) {
                 map4.put(variable, false);
             }
         }
 
         for(Constraint cons : bwc4.getConstraints()) {
-            System.out.println(cons.toString());
+            // DEBUG
+            // if (cons.toString().startsWith("Implication")) {
+            //     if (!cons.toString().endsWith("[true])") && !cons.toString().endsWith("[false])")) {
+            //         System.out.println(cons.toString());
+            //     }
+            // }
+
             if(!cons.isSatisfiedBy(map4)) {
                 System.out.println(cons.toString() + " n'est pas satisfait");
                 allSatisfied = false;
             }
         }
         System.out.println(allSatisfied ? "valide" : "NOPE");
+
 
     }
 
