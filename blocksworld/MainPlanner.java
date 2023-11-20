@@ -22,6 +22,7 @@ public class MainPlanner {
         Variable Fr1 = new BooleanVariable("Fr1");
         Variable Fr2 = new BooleanVariable("Fr2");
         Variable Fr3 = new BooleanVariable("Fr3");
+
         // Création de l'état initial
         initialState.put(On0, -1);
         initialState.put(On1, -2);
@@ -74,9 +75,9 @@ public class MainPlanner {
         System.out.println("Plan : " + planner.plan());
         System.out.println("Temps d'execution : " + (System.currentTimeMillis() - startTime) + " ms");
         System.out.println("Nombre de noeuds : " + planner.getNombresNoeuds());
-        if (planner instanceof AStarPlanner) {
-            System.out.println("Nombre blocs mal placés : " + ((AStarPlanner) planner).getHeuristic().estimate(planner.getInitialState()));
-        }
+        // if (planner instanceof AStarPlanner) {
+        //     System.out.println("Nombre blocs mal placés : " + ((AStarPlanner) planner).getHeuristic().estimate(planner.getInitialState()));
+        // }
         System.out.println("################# FIN TEST "+ nom +" #################");
 
     }

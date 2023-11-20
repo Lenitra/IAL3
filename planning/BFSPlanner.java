@@ -142,7 +142,7 @@ public class BFSPlanner implements Planner {
 
     @Override
     public Map<Variable, Object> getInitialState() {
-       return this.initialState;
+        return this.initialState;
     }
 
     @Override
