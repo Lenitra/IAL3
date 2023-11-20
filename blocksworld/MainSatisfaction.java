@@ -1,9 +1,19 @@
 package blocksworld;
 
-import java.util.*;
 
-import modelling.*;
-import cp.*;
+import modelling.Variable;
+
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
+
+import cp.BacktrackSolver;
+import cp.MACSolver;
+import cp.NbConstraintsVariableHeuristic;
+import cp.RandomValueHeuristic;
+import cp.Solver;
+import cp.HeuristicMACSolver;
 
 public class MainSatisfaction {
     public static void main(String[] args) {
@@ -44,9 +54,12 @@ public class MainSatisfaction {
             long startTime = System.nanoTime();
             Map<Variable, Object> solution = solver.solve();
             long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            System.out.println("Temps de calcul : " + duration + " ns");
-            System.out.println("Solution : " + solution);
+            long duration = (endTime - startTime)/ 1_000_000;
+            System.out.println("Solution : ");
+            for (Variable variable : solution.keySet()) {
+                System.out.println(variable.getName() + " : " + solution.get(variable));
+            }
+            System.out.println("Temps de calcul : " + duration + " ms");
         }
     }
 
@@ -71,9 +84,12 @@ public class MainSatisfaction {
             long startTime = System.nanoTime();
             Map<Variable, Object> solution = solver.solve();
             long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            System.out.println("Temps de calcul : " + duration + " ns");
-            System.out.println("Solution : " + solution);
+            long duration = (endTime - startTime) / 1_000_000;
+            System.out.println("Solution : ");
+            for (Variable variable : solution.keySet()) {
+                System.out.println(variable.getName() + " : " + solution.get(variable));
+            }
+            System.out.println("Temps de calcul : " + duration + " ms");
         }
     }
 
@@ -98,9 +114,12 @@ public class MainSatisfaction {
             long startTime = System.nanoTime();
             Map<Variable, Object> solution = solver.solve();
             long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            System.out.println("Temps de calcul : " + duration + " ns");
-            System.out.println("Solution : " + solution);
+            long duration = (endTime - startTime) / 1_000_000;
+            System.out.println("Solution : ");
+            for (Variable variable : solution.keySet()) {
+                System.out.println(variable.getName() + " : " + solution.get(variable));
+            }
+            System.out.println("Temps de calcul : " + duration + " ms");
         }
     }
 }
