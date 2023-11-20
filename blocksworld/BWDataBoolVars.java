@@ -15,7 +15,7 @@ public class BWDataBoolVars extends BWVariable {
         super(nbBlocks, nbPiles);
     }
 
-    
+
     public void setAllBoolVars() {
         Set<Variable> resultat = new HashSet<>(); // ensemble des contraintes
         BWVariable variables = new BWVariable(this.nbBlocks, this.nbPiles); // On créé les variables
