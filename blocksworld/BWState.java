@@ -1,8 +1,12 @@
 package blocksworld;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+
+import modelling.BooleanVariable;
 
 public class BWState {
     private int nbBlocks;
@@ -50,6 +54,14 @@ public class BWState {
         return piles;
     }
 
+    public Set<BooleanVariable> getBoolVars() {
+        BWDataBoolVars data = new BWDataBoolVars(nbBlocks, nbPiles);
+        Set<BooleanVariable> boolVars = data.getBoolFromState(piles);
+
+        return boolVars;
+    }
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -59,9 +71,6 @@ public class BWState {
         return sb.toString();
     }
 
-    public static void main(String[] args) {
-        BWState world = new BWState(10, 3); // Example with 10 blocks and 3 piles
-        System.out.println(world);
-    }
+
     
 }

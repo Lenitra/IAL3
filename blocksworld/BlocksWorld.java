@@ -2,6 +2,7 @@ package blocksworld;
 
 import java.util.Set;
 
+import modelling.BooleanVariable;
 import modelling.Variable;
 
 public class BlocksWorld {
@@ -29,11 +30,11 @@ public class BlocksWorld {
         return bw.getOnb();
     }
 
-    public Set<Variable> getFixedb() {
+    public Set<BooleanVariable> getFixedb() {
         return bw.getFixedb();
     }
 
-    public Set<Variable> getFreep() {
+    public Set<BooleanVariable> getFreep() {
         return bw.getFreep();
     }
 

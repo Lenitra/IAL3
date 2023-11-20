@@ -12,8 +12,8 @@ public class BWVariable {
     protected int nbPiles; // nombre de piles
     protected Set<Variable> var = new HashSet<>(); // ensemble des variables.
     protected Set<Variable> onbV = new HashSet<>(); // ensemble des blocs
-    protected Set<Variable> fixedbV = new HashSet<>(); // ensemble des blocs
-    protected Set<Variable> freepV = new HashSet<>(); // ensemble des blocs
+    protected Set<BooleanVariable> fixedbV = new HashSet<>(); // ensemble des blocs
+    protected Set<BooleanVariable> freepV = new HashSet<>(); // ensemble des blocs
 
     public BWVariable(int nbBlocks, int pile) {
         this.nbBlocks = nbBlocks;
@@ -38,11 +38,11 @@ public class BWVariable {
         return onbV;
     }
 
-    public Set<Variable> getFixedb() {
+    public Set<BooleanVariable> getFixedb() {
         return fixedbV;
     }
 
-    public Set<Variable> getFreep() {
+    public Set<BooleanVariable> getFreep() {
         return freepV;
     }
         
@@ -69,14 +69,14 @@ public class BWVariable {
 
     public void setFixedbV() {
         for (int i = 0; i < nbBlocks; i++) {
-            Variable fixedBool = new BooleanVariable("Fi" + i);
+            BooleanVariable fixedBool = new BooleanVariable("Fi" + i);
             fixedbV.add(fixedBool);
         }
     }
 
     public void setFreepV() {
         for (int i = -nbPiles; i < 0; i++) { 
-            Variable freeBool = new BooleanVariable("Fr" + i);
+            BooleanVariable freeBool = new BooleanVariable("Fr" + i);
             freepV.add(freeBool);
         }
     }

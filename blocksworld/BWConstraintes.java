@@ -26,8 +26,8 @@ public class BWConstraintes extends BlocksWorld{
         Set<Constraint> resultat = new HashSet<>(); // ensemble des contraintes
         BWVariable variables = new BWVariable(this.nbBlocks, this.nbPiles); // On créé les variables
         Set<Variable> variablesOn = variables.getOnb();
-        Set<Variable> variablesFixed = variables.getFixedb();
-        Set<Variable> variablesFree = variables.getFreep();
+        Set<BooleanVariable> variablesFixed = variables.getFixedb();
+        Set<BooleanVariable> variablesFree = variables.getFreep();
 
         for(Variable variable1 : variablesOn){ // On loop sur les variables de de blocks On
             int num1 = Integer.parseInt(variable1.getName().substring(2)); // on récupère le numéro du bloc

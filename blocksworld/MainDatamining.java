@@ -2,17 +2,26 @@ package blocksworld;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Pattern;
+
+import datamining.AssociationRule;
+import datamining.BooleanDatabase;
+import modelling.BooleanVariable;
 
 public class MainDatamining {
     public static void main(String[] args) {
-        // create a var List<List<Integer>> data = new ArrayList<>();
-        List<List<Integer>> data = new ArrayList<>();
-        // add rows
-        data.add(Arrays.asList(1, 2, 3));
-        data.add(Arrays.asList(4, 5, 6));
-        data.add(Arrays.asList(7, 8, 9));
-        // print the data
-        System.out.println(data);
+        // Création de la base de données
+        BooleanDatabase db = new BooleanDatabase(null);
+
+        // Génération de 10 000 instances d'états du monde des blocs
+        for (int i = 0; i < 10000; i++) {
+            BWState state = new BWState(10, 3);
+            Set<BooleanVariable> instance = state.getBoolVars();
+            db.add(instance);
+        }
     }
+
 }
