@@ -1,100 +1,86 @@
 package blocksworld;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import modelling.BooleanVariable;
-import modelling.Variable;
 
 public class BWDataBoolVars extends BWVariable {
-    
-    protected int nbBlocks;
-    protected int nbPiles;
-    protected Set<BooleanVariable> allBoolVars;
-    protected Set<BooleanVariable> onbb;
-    protected Set<BooleanVariable> ontableb;
-    protected Set<BooleanVariable> fixedb;
-    protected Set<BooleanVariable> freep;
 
+    private Map<String, Map<String, BooleanVariable>> booleanMap;
+    
     public BWDataBoolVars(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
-        this.nbBlocks = nbBlocks;
-        this.nbPiles = nbPiles;
-        this.allBoolVars = new HashSet<>();
-        this.onbb = new HashSet<>();
-        this.ontableb = new HashSet<>();
-        this.fixedb = new HashSet<>();
-        this.freep = new HashSet<>();
-        setAllBoolVars();
+        this.booleanMap = new HashMap<>();
+        initializeBooleanMap();
     }
 
+    private void initializeBooleanMap() {
+        this.booleanMap.put("On", new HashMap<>());
+        this.booleanMap.put("OnTable", new HashMap<>());
+        this.booleanMap.put("Fi", new HashMap<>());
+        this.booleanMap.put("Fr", new HashMap<>());
 
-    public Set<BooleanVariable> getOnbb() {
-        return onbb;
-    }
+        for (int b = 0; b < nbBlocks; b++) {
+            //pour tous les blocks on vérifie qu'ils sont fixés
+            this.booleanMap.get("Fi").put("Fi" + b, new BooleanVariable("Fi" + b));
 
-
-
-    public void setAllBoolVars() {
-        Set<BooleanVariable> resultat = new HashSet<>(); // ensemble des contraintes
-        BWVariable variables = new BWVariable(this.nbBlocks, this.nbPiles); // On créé les variables
-        Set<Variable> variablesOn = variables.getOnb();
-
-        fixedb = variables.getFixedb();
-        freep = variables.getFreep();
-
-        // Contrainte de type Onb,b1
-        for(Variable var1 : variablesOn){ // On loop sur les variables de de blocks On
-            int num1 = Integer.parseInt(var1.getName().substring(2)); // on récupère le numéro du bloc
-            resultat.add(new BooleanVariable("Fi" + num1));
-            // Contrainte de type On (Un bloc ne peut pas être sur lui même)
-            for(Variable var2 : variablesOn){
-                int num2 = Integer.parseInt(var2.getName().substring(2)); // on récupère le numéro du bloc
-                
-                // Onb,b1
-                onbb.add(new BooleanVariable("On" + num1 + "," + num2));
+            //on vérifie que le block est sur un autre block
+            for (int bprime = 0; bprime < nbBlocks; bprime++) {
+                //on vérifie que les deux blocks sont différents
+                if (b != bprime) {
+                    this.booleanMap.get("On").put("On" + b + "_" + bprime, new BooleanVariable("On" + b + "_" + bprime));
+                }
             }
-
-
-
-            for(Variable pil1 : freep){
-                int numPil1 = Integer.parseInt(pil1.getName().substring(2)); // on récupère le numéro de la pile
-                // Variable on-tableb,p 
-                ontableb.add(new BooleanVariable("on-table" + num1 + "," + numPil1));
+            //on vérifie que le block est sur une pile
+            for (int p = -nbPiles; p < nbPiles; p++) {
+                this.booleanMap.get("OnTable").put("OnTable" + b + "_" + p, new BooleanVariable("OnTable" + b + "_" + p));
             }
         }
 
-
-
-        // set allBoolVars
-        allBoolVars.addAll(onbb);
-        allBoolVars.addAll(ontableb);
-        allBoolVars.addAll(fixedb);
-        allBoolVars.addAll(freep);
-    }
-
-
-
-    public Set<BooleanVariable> getBoolFromState(List<List<Integer>> state) {
-        
-        // On récupère le nombre de piles
-        int nbPiles = state.size();
-        // On récupère le nombre de blocs
-        int nbBlocks = 0;
-        for(List<Integer> pile : state){
-            nbBlocks += pile.size();
+        for (int p = -nbPiles; p < nbPiles; p++) {
+                this.booleanMap.get("Fr").put("Fr"+ p, new BooleanVariable("Fr"+ p));
         }
-
-        this.nbBlocks = nbBlocks;
-        this.nbPiles = nbPiles;
-
-        setAllBoolVars();
-
-        return allBoolVars;
-
     }
 
+    public Set<BooleanVariable> takeTransaction(List<List<Integer>> transactions) {
+        Set<BooleanVariable> items = new HashSet<>();
+        for (int i = 0; i < transactions.size(); i++) {
+            List<Integer> transaction = transactions.get(i);
+            if (transaction.isEmpty()){
+                items.add(this.booleanMap.get("Fr").get("Fr"+i));
+            }
+            else {
+                int b = transaction.get(0);
+                transaction.remove(0);
+                items.add(this.booleanMap.get("OnTable").get("OnTable" + b + "_" + i));
+                while (!transaction.isEmpty()) {
+                    int bprime = transaction.get(0);
+                    transaction.remove(0);
+                    items.add(this.booleanMap.get("On").get("On" + b + "_" + bprime));
+                    items.add(this.booleanMap.get("Fi").get("Fi" + b));
+                    b = bprime;
+                }
+            }
+        }
+        return items;
+    }
+
+    public Map<String, Map<String, BooleanVariable>> getBooleanMap() {
+        return booleanMap;
+    }
+
+    public Set<BooleanVariable> getBoolVariables() {
+        Set<BooleanVariable> onVariables = new HashSet<>();
+        onVariables.addAll(this.booleanMap.get("On").values());
+        onVariables.addAll(this.booleanMap.get("OnTable").values());
+        onVariables.addAll(this.booleanMap.get("Fi").values());
+        onVariables.addAll(this.booleanMap.get("Fr").values());
+        return onVariables;
+    }
 
 
 

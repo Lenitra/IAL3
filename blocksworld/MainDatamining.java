@@ -1,27 +1,37 @@
 package blocksworld;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Pattern;
 
+import bwgeneratordemo.Demo;
 import datamining.AssociationRule;
 import datamining.BooleanDatabase;
+import datamining.BruteForceAssociationRuleMiner;
 import modelling.BooleanVariable;
+
+import java.util.Random;
 
 public class MainDatamining {
     public static void main(String[] args) {
-        // Création de la base de données
-        BooleanDatabase db = new BooleanDatabase(null);
 
-        // Génération de 10 000 instances d'états du monde des blocs
+        BWDataBoolVars bw = new BWDataBoolVars(5, 5);
+
+        BooleanDatabase db = new BooleanDatabase(bw.getBoolVariables());
         for (int i = 0; i < 10000; i++) {
-            BWState state = new BWState(10, 3);
-            Set<BooleanVariable> instance = state.getBoolVars();
+        // Drawing a state at random
+            List<List<Integer>> state = Demo.getState(new Random());
+            // Converting state to instance
+            Set<BooleanVariable> instance = bw.takeTransaction(state);
+            // Adding state to database
             db.add(instance);
         }
-    }
 
+        BruteForceAssociationRuleMiner bruteForceAssociationRuleMiner = new BruteForceAssociationRuleMiner(db);
+        Set<AssociationRule> associationRules = bruteForceAssociationRuleMiner.extract(2/3f, 95/100f);
+
+        System.out.println("Association rules : " + associationRules.toString());
+        System.out.println("Number of association rules : " + associationRules.size());
+
+        
+    }
 }
