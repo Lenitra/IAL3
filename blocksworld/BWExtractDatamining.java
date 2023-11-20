@@ -44,11 +44,13 @@ public class BWExtractDatamining extends BWVariable {
                 // Variable on-tableb,p 
                 if (var1.equals(-numPil1)){ //TODO: check if it's the right way to do it : (if value of var1 == numPil1)
                     Variable newVar = new Variable("on-table" + num1 + "," + numPil1, Set.of(true));
+                    resultat.add(newVar);
                 } else {
                     Variable newVar = new Variable("on-table" + numPil1, Set.of(false));
+                    resultat.add(newVar);
                 }
             }
-            
+
         }
     }
 
