@@ -283,12 +283,6 @@ public class MainConstraintes {
         }
 
         for(Constraint cons : bwc4.getConstraints()) {
-            // DEBUG
-            // if (cons.toString().startsWith("Implication")) {
-            //     if (!cons.toString().endsWith("[true])") && !cons.toString().endsWith("[false])")) {
-            //         System.out.println(cons.toString());
-            //     }
-            // }
 
             if(!cons.isSatisfiedBy(map4)) {
                 System.out.println(cons.toString() + " n'est pas satisfait");
