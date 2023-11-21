@@ -4,7 +4,9 @@
         "libs/cptests.jar",
         "libs/modellingtests.jar",
         "libs/planningtests.jar",
-        "libs/dataminingtests.jar"
+        "libs/dataminingtests.jar",
+        "libs/blocksworld.jar",
+        "libs/bwgenerator.jar"
     ],
     "java.debug.settings.onBuildFailureProceed": true
 }

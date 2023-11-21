@@ -54,12 +54,12 @@ public class BWState {
         return piles;
     }
 
-    public Set<BooleanVariable> getBoolVars() {
-        BWDataBoolVars data = new BWDataBoolVars(nbBlocks, nbPiles);
-        Set<BooleanVariable> boolVars = data.getBoolFromState(piles);
+    // public Set<BooleanVariable> getBoolVars() {
+    //     BWDataBoolVars data = new BWDataBoolVars(nbBlocks, nbPiles);
+    //     Set<BooleanVariable> boolVars = data.getBoolFromState(piles);
 
-        return boolVars;
-    }
+    //     return boolVars;
+    // }
 
 
     @Override
