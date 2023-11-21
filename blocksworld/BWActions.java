@@ -10,48 +10,49 @@ import modelling.Variable;
 import planning.Action;
 import planning.BasicAction;
 
+// Classe qui permet de générer les actions possibles pour le blocksworld
 public class BWActions extends BlocksWorld {
 
-    private int numBlocks;  
-    private int numPiles;
+    private int nbBlocks;  
+    private int nbPiles;
     private Set<Action> actions = new HashSet<Action>();
 
     public BWActions(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
-        this.numBlocks = nbBlocks;
-        this.numPiles = nbPiles;
+        this.nbBlocks = nbBlocks;
+        this.nbPiles = nbPiles;
         GenerateActions();
     }
 
     private void GenerateActions() {
         
-        for (int block = 0; block < numBlocks; block++) {
-            for(int sourceblock = 0; sourceblock < numBlocks; sourceblock++) {
+        for (int block = 0; block < nbBlocks; block++) {
+            for(int sourceblock = 0; sourceblock < nbBlocks; sourceblock++) {
                 // BLOCK VERS BLOCK
-                for(int destiblock = 0; destiblock < numBlocks; destiblock++) {
+                for(int destiblock = 0; destiblock < nbBlocks; destiblock++) {
                     if (block != sourceblock && block != destiblock && sourceblock != destiblock) {
                         BlockToBlock(block, sourceblock, destiblock);
                     }
                 }
     
                 // BLOCK VERS PILE
-                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
+                for(int destiPile = -1; destiPile >= -nbPiles; destiPile--) {
                     if (block != sourceblock) {
                         BlockToPile(block, sourceblock, destiPile);
                     }
                 }
             }
 
-            for(int sourcePile = -1; sourcePile >= -numPiles; sourcePile--) {
+            for(int sourcePile = -1; sourcePile >= -nbPiles; sourcePile--) {
                 // BLOC SUR PILE VERS BLOC
-                for(int destiblock = 0; destiblock < numBlocks; destiblock++) {
+                for(int destiblock = 0; destiblock < nbBlocks; destiblock++) {
                     if (block != destiblock) {
                         BlockPileToBlock(block, sourcePile, destiblock);
                     }
                 }
 
                 // BLOC SUR PILE VERS PILE
-                for(int destiPile = -1; destiPile >= -numPiles; destiPile--) {
+                for(int destiPile = -1; destiPile >= -nbPiles; destiPile--) {
                     if (sourcePile != destiPile) {
                         BlockPileToPile(block, sourcePile, destiPile);
                     }

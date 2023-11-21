@@ -8,22 +8,12 @@ import modelling.Constraint;
 import modelling.Implication;
 import modelling.Variable;
 
-/**
- * Classe BWConstraintesCroissant dérivée de BWConstraintes.
- * Cette classe est utilisée pour générer des contraintes croissantes
- * dans le monde des blocs (BlocksWorld).
- */
+// Classe qui représente les contraintes croissantes du problème
 public class BWConstraintesCroissant extends BWConstraintes {
 
-    protected int nbBlocks; // Nombre de blocs dans le monde des blocs
-    protected int nbPiles;  // Nombre de piles dans le monde des blocs
+    protected int nbBlocks; // nombre de blocs
+    protected int nbPiles; // nombre de piles
 
-    /**
-     * Constructeur pour la classe BWConstraintesCroissant.
-     *
-     * @param nbBlocks Nombre de blocs dans le monde des blocs.
-     * @param nbPiles  Nombre de piles dans le monde des blocs.
-     */
     public BWConstraintesCroissant(int nbBlocks, int nbPiles) {
         super(nbBlocks, nbPiles);
         this.nbBlocks = nbBlocks;
@@ -32,44 +22,45 @@ public class BWConstraintesCroissant extends BWConstraintes {
     }
 
     /**
-     * Méthode pour générer les contraintes croissantes.
-     * 
-     * @return Un ensemble de contraintes pour le monde des blocs.
+     * Méthode qui retourne l’ensemble des contraintes croissante du problème
+     * @return un set de contraintes croissantes
      */
     public Set<Constraint> generateConstraints() {
+        // Création d'un set de contraintes vide
         Set<Constraint> constraints = new HashSet<>();
 
-        // Générer les identifiants des piles sous forme de nombres négatifs
+        // Création d'un set de piles
         Set<Integer> piles = new HashSet<>();
         for (int i = -1; i >= -nbPiles; i--) {
             piles.add(i);
         }
 
-        // Obtenir toutes les permutations possibles des variables onb
-        Collection<Variable> permutations = getOnbV();
+        // Création d'un set de blocs
+        Collection<Variable> ColVarOnb = getOnbV();
 
-        // Créer des contraintes pour chaque couple de variables
-        for (Variable v : permutations) {
-            for (Variable v2 : permutations) {
-                if (!v.equals(v2)) { // S'assurer que v et v2 ne sont pas identiques
-                    int v2S = bw.getIndex(v); // Obtenir l'index de v dans bw
+        // On parcourt les variables de type "On"
+        for (Variable v : ColVarOnb) {
+            for (Variable v2 : ColVarOnb) {
+                if (!v.equals(v2)) { 
+                    int num = bw.getIndex(v);
 
+                    // Création d'un set de valeurs qui contient le numéro du bloc
                     Set<Object> ens1 = new HashSet<>();
-                    ens1.add(v2S);
+                    ens1.add(num);
 
+                    // Création d'un set de valeurs qui contient toutes les piles
                     Set<Integer> ens2 = new HashSet<>();
-                    for (int j = 0; j < v2S; j++) {
+                    for (int j = 0; j < num; j++) {
                         ens2.add(j);
                     }
-
                     ens1.addAll(ens2);
-
-                    // Créer une nouvelle contrainte d'implication
-                    Constraint c1 = new Implication(v, Set.of(v2S), v2, ens1);
-                    constraints.add(c1); // Ajouter la contrainte à l'ensemble
+                    
+                    // Création d'une contrainte d'implication
+                    Constraint c1 = new Implication(v, Set.of(num), v2, ens1);
+                    constraints.add(c1);
                 }
             }
         }
-        return constraints; // Retourner l'ensemble de contraintes
+        return constraints;
     }
 }

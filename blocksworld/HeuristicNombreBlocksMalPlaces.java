@@ -5,6 +5,7 @@ import java.util.Map;
 import modelling.Variable;
 import planning.Heuristic;
 
+// Classe qui permet de calculer l'heuristique du nombre de blocks mal placés
 public class HeuristicNombreBlocksMalPlaces implements Heuristic{
 
     // Etat final du problème
@@ -14,6 +15,9 @@ public class HeuristicNombreBlocksMalPlaces implements Heuristic{
         this.goal = goal;
     }
 
+    /**
+     * Méthode qui permet d'estimer le nombre de blocks mal placés
+     */
     @Override
     public float estimate(Map<Variable, Object> state) {
         // On compte le nombre de blocks mal placés

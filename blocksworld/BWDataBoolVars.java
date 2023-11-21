@@ -8,6 +8,7 @@ import java.util.Set;
 
 import modelling.BooleanVariable;
 
+// Classe représentant les variables booléennes pour le problème du blocksworld
 public class BWDataBoolVars extends BWVariable {
 
     private Map<String, Map<String, BooleanVariable>> booleanMap;
@@ -18,6 +19,10 @@ public class BWDataBoolVars extends BWVariable {
         initializeBooleanMap();
     }
 
+    /**
+     * Initialise la map de variables booléennes
+     * On crée une map de map de variables booléennes pour pouvoir accéder aux variables booléennes par leur nom
+     */
     private void initializeBooleanMap() {
         this.booleanMap.put("On", new HashMap<>());
         this.booleanMap.put("OnTable", new HashMap<>());
@@ -41,19 +46,27 @@ public class BWDataBoolVars extends BWVariable {
             }
         }
 
+        //on vérifie que la pile est vide
         for (int p = -nbPiles; p < nbPiles; p++) {
                 this.booleanMap.get("Fr").put("Fr"+ p, new BooleanVariable("Fr"+ p));
         }
     }
 
+    /**
+     * Méthode qui retourne l'ensemble des variables booléennes d'une liste de transactions
+     * @param transactions  la liste de transactions
+     * @return  l'ensemble des variables booléennes
+     */
     public Set<BooleanVariable> takeTransaction(List<List<Integer>> transactions) {
         Set<BooleanVariable> items = new HashSet<>();
         for (int i = 0; i < transactions.size(); i++) {
             List<Integer> transaction = transactions.get(i);
             if (transaction.isEmpty()){
+                // Si la transaction est vide, on ajoute la variable booléenne correspondante à la pile vide
                 items.add(this.booleanMap.get("Fr").get("Fr"+i));
             }
             else {
+                // Sinon on ajoute la variable booléenne correspondante à la position du bloc
                 int b = transaction.get(0);
                 transaction.remove(0);
                 items.add(this.booleanMap.get("OnTable").get("OnTable" + b + "_" + i));
@@ -69,10 +82,18 @@ public class BWDataBoolVars extends BWVariable {
         return items;
     }
 
+    /**
+     * Getter de la map de variables booléennes
+     * @return  la map des variables booléennes
+     */
     public Map<String, Map<String, BooleanVariable>> getBooleanMap() {
         return booleanMap;
     }
 
+    /**
+     * Récupère toutes les variables booléennes dans un ensemble
+     * @return l'ensemble des variables booléennes
+     */
     public Set<BooleanVariable> getBoolVariables() {
         Set<BooleanVariable> onVariables = new HashSet<>();
         onVariables.addAll(this.booleanMap.get("On").values());
