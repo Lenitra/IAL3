@@ -52,7 +52,7 @@ public class BWRegularyConstraintes extends BWConstraintes {
                 }
             }
         }
-
+        // On retourne l'ensemble des contraintes régulières
         return resultat;
     }
 }

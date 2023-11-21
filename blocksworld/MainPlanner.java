@@ -50,20 +50,22 @@ public class MainPlanner {
 
         Goal goal = new BasicGoal(goalState);
 
-        //on va tester dfs et bfs avec un etat initial et un etat final
         BWActions bwActions = new BWActions(3,3);
         Set<Action> actions = bwActions.getActions();
         
-        //on va tester dfs et bfs avec un etat initial et un etat final
+        //on va tester dfs avec un etat initial et un etat final
         Planner dfs = new DFSPlanner(initialState, actions, goal);
         PlannerTest(dfs, "DFS");
 
+        //on va tester bfs avec un etat initial et un etat final
         Planner bfs = new BFSPlanner(initialState, actions, goal);
         PlannerTest(bfs, "BFS");
 
+        //on va tester dijkstra avec un etat initial, un etat final et un but
         Planner djikstra = new DijkstraPlanner(initialState, actions, goal);
         PlannerTest(djikstra, "Dijkstra");
 
+        //on va tester A* avec un etat initial, un etat final, un but et une heuristique
         HeuristicNombreBlocksMalPlaces HeurisNBMP = new HeuristicNombreBlocksMalPlaces(goalState);
         Planner astar = new AStarPlanner(initialState, actions, goal, HeurisNBMP);
         PlannerTest(astar, "AStar");

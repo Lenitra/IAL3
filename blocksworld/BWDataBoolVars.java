@@ -103,6 +103,4 @@ public class BWDataBoolVars extends BWVariable {
         return onVariables;
     }
 
-
-
 }

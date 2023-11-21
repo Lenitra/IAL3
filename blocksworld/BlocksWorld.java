@@ -11,13 +11,14 @@ public class BlocksWorld {
     protected int nbPiles; // nombre de piles
     protected BWVariable bw; // ensemble des variables.
 
-    // constructeur du blocksworld
+    // Constructeur du blocksworld
     public BlocksWorld(int nbBlocks, int nbPiles) {
         this.nbBlocks = nbBlocks;
         this.nbPiles = nbPiles;
         this.bw = new BWVariable(nbBlocks, nbPiles);
     }
 
+    // GETTERS
     public int getNbBlocks() {
         return this.nbBlocks;
     }
