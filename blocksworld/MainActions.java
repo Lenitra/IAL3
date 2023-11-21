@@ -1,6 +1,8 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import modelling.BooleanVariable;
 import modelling.Variable;
@@ -241,15 +243,16 @@ public class MainActions {
             //System.out.println("Testing action: " + action);
             
             if (action.isApplicable(initialState)) {
+                System.out.println("-----------------");
                 System.out.println("Action is applicable.");
-                //System.out.println(action.toString());
                 Map<Variable, Object> nextState = action.successor(initialState);
                 System.out.println("Resulting state:");
                 printState(nextState);
+                System.out.println("-----------------");
                 System.out.println();
             } 
             else {
-                System.out.println("Action is not applicable.");
+                // System.out.println("Action is not applicable.");
             }
         }
     }
@@ -259,30 +262,5 @@ public class MainActions {
             System.out.println(entry.getKey().toString()+":"+ entry.getValue());
         }
     }
-
-    //--------------------------------------------------------------------------------
-    //TEST PLAN BLOCKWORLD
-    // private static void testBlockWoldPlan(int numBlocks, int numPiles) {
-    //     // Création des actions pour le monde des blocs (BlockPileToPile)
-    //     BWActions blockWorldActions = new BWActions(numBlocks, numPiles);
-    //     Set<Action> allActions = blockWorldActions.getActions();
-    //     System.out.println(allActions.size());
-
-    //     // Création d'un état initial
-    //     Map<Variable, Object> initialState = createInitialStateBlockWoldPlan(numBlocks, numPiles);
-
-    //     // Affichage de l'état initial
-    //     System.out.println("État initial pour BlockWoldPlan :");
-    //     printState(initialState);
-    //     System.out.println();
-
-    //     // Création d'un état final (but)
-    //     Map<Variable, Object> goalState = createGoalStateBlockWoldPlan(numBlocks, numPiles);
-    //     System.out.println("État final :");
-    //     printState(goalState);
-    //     System.out.println();
-
-    //    DijkstraPlanner planner = new DijkstraPlanner(initialState,allActions,goalState);
-    // }
 
 }
