@@ -1,8 +1,13 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import modelling.*;
+import modelling.BooleanVariable;
+import modelling.Constraint;
+import modelling.DifferenceConstraint;
+import modelling.Implication;
+import modelling.Variable;
 
 
 

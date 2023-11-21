@@ -1,9 +1,12 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-import modelling.*;
-
+import modelling.Constraint;
+import modelling.Implication;
+import modelling.Variable;
 
 
 public class BWConstraintesCroissant extends BWConstraintes{

@@ -1,6 +1,6 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.Map;
 
 import modelling.Variable;
 import planning.Heuristic;

@@ -1,9 +1,14 @@
 package blocksworld;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
-import modelling.*;
-import planning.*;
+import modelling.BooleanVariable;
+import modelling.Variable;
+import planning.Action;
+import planning.BasicAction;
 
 public class BWActions extends BlocksWorld {
 

@@ -1,7 +1,12 @@
 package blocksworld;
 
-import modelling.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import modelling.Constraint;
+import modelling.Implication;
+import modelling.Variable;
+
 
 public class BWRegularyConstraintes extends BWConstraintes {
     
