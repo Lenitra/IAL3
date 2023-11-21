@@ -61,6 +61,13 @@ public class BasicAction implements Action{
     }
 
     public String toString() {
-        return "Precondition : " + this.precondition + "\nEffect : " + this.effect + "\nCost : " + this.cout;
+        // on affiche le plan
+        String s = "";
+        for (Variable v : this.precondition.keySet()) {
+            s += "\n"+ v.getName() + " = " + this.precondition.get(v);
+        }
+        s += "\nCout : " + this.cout;
+        s += "\n";
+        return s;
     }
 }

@@ -111,10 +111,10 @@ public class MainSatisfaction {
 
         for (Solver solver : solvers) {
             System.out.println(" ################# TEST " + solver.getClass().getSimpleName() + " #################");
-            long startTime = System.nanoTime();
+            long startTime = System.currentTimeMillis();
             Map<Variable, Object> solution = solver.solve();
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime) / 1_000_000;
+            long endTime = System.currentTimeMillis();
+            long duration = (endTime - startTime);
             System.out.println("Solution : ");
             for (Variable variable : solution.keySet()) {
                 System.out.println(variable.getName() + " : " + solution.get(variable));

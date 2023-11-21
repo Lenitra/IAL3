@@ -39,4 +39,14 @@ public class BasicGoal implements Goal {
         return newState;
     }
 
+    @Override
+    public String toString() {
+        //etat final
+        String s = "";
+        for (Variable v : instantiation.keySet()) {
+            s += "\n"+ v.getName() + " = " + instantiation.get(v);
+        }
+        return s;
+
+    }
 }

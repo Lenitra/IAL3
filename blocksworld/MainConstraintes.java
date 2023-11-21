@@ -12,30 +12,22 @@ public class MainConstraintes {
         boolean allSatisfied = true;
 
         System.out.println(" ################# TEST Contraintes #################");
-        allSatisfied = true;
-        
+        BWConstraintes bwc1 = new BWConstraintes(3, 1);
+
         Map<Variable, Object> map1 = new HashMap<>();
-        BWConstraintes bwc1 = new BWConstraintes(4, 3);
-        
+
         for (Variable variable : bwc1.getBWVariable().getAllVars()) {
             String name1 = variable.getName();
             if (name1.equals("On0")) {
-                map1.put(variable, 1);
+                map1.put(variable, -2);
             }
             
             if (name1.equals("On1")) {
-                map1.put(variable, 2);
+                map1.put(variable, 3);
             }
             
             if (name1.equals("On2")) {
-                map1.put(variable, -1);
-            }
-
-            if (name1.equals("On3")) {
-                map1.put(variable, -2);
-            }
-            if(name1.equals("On4")) {
-                map1.put(variable, -3);
+                map1.put(variable, 9);
             }
             
             if (name1.equals("Fi0")) {
@@ -49,25 +41,15 @@ public class MainConstraintes {
             if(name1.equals("Fi2")) {
                 map1.put(variable, true);
             }
-            if(name1.equals("Fi3")) {
-                map1.put(variable, false);
-            }
-            if(name1.equals("Fi4")) {
-                map1.put(variable, false);
-            }
 
             if(name1.equals("Fr-1")) {
                 map1.put(variable, false);
             }
-            if(name1.equals("Fr-2")) {
-                map1.put(variable, false);
-            }
-            if(name1.equals("Fr-3")) {
-                map1.put(variable, false);
-            }
         }
 
-        System.out.println(bwc1.getConstraints().size());
+        
+
+        System.out.println("Taille des contraintes : "+ bwc1.getConstraints().size());
         for(Constraint cons : bwc1.getConstraints()) {
             if(!cons.isSatisfiedBy(map1)) {
                 System.out.println(cons.toString() + " n'est pas satisfait");
@@ -221,9 +203,6 @@ public class MainConstraintes {
             if (name4.equals("On9")) {
                 map4.put(variable, -3);
             }
-
-
-
             if (name4.equals("Fi0")) {
                 map4.put(variable, true);
             }
@@ -280,6 +259,7 @@ public class MainConstraintes {
             if(name4.equals("Fr-4")) {
                 map4.put(variable, false);
             }
+
         }
 
         for(Constraint cons : bwc4.getConstraints()) {
