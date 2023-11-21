@@ -14,7 +14,7 @@ import java.util.Random;
 public class MainDatamining {
     public static void main(String[] args) {
 
-        BWDataBoolVars bw = new BWDataBoolVars(5, 5);
+        BWDataBoolVars bw = new BWDataBoolVars(10, 4);
         BooleanDatabase db = new BooleanDatabase(bw.getBoolVariables());
         for (int i = 0; i < 100000; i++) {
         // Drawing a state at random

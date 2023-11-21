@@ -23,8 +23,8 @@ public class MainPlanner {
         // Création de l'état initial
         // [0 , 2]
         // [1]
-        initialState.put(new Variable("On0", Set.of(-1,-2,-3,1, 2)), -1);
-        initialState.put(new Variable("On1", Set.of(-1,-2,-3,0, 2)), -2);
+        initialState.put(new Variable("On0", Set.of(-1, -2,-3, 1, 2)), -1);
+        initialState.put(new Variable("On1", Set.of(-1, -2,-3, 0, 2)), -2);
         initialState.put(new Variable("On2", Set.of(-1, -2,-3, 0, 1)), 0);
         initialState.put(new BooleanVariable("Fi0"),true);
         initialState.put(new BooleanVariable("Fi1"),false);
@@ -73,11 +73,15 @@ public class MainPlanner {
         long startTime = System.currentTimeMillis();
 
         System.out.println("################# TEST "+ nom + " #################");
-        System.out.println("Etat initial : " + planner.getInitialState());
-        System.out.println("-----------------");
-        System.out.println("Etat final : " + planner.getGoal().toString());
-        System.out.println("-----------------");
-        System.out.println("Plan : " + planner.plan());
+        
+        planner.getInitialState();
+        planner.getGoal();
+        planner.plan();
+        // System.out.println("Etat initial : " + planner.getInitialState());
+        // System.out.println("-----------------");
+        // System.out.println("Etat final : " + planner.getGoal().toString());
+        // System.out.println("-----------------");
+        // System.out.println("Plan : " + planner.plan());
         System.out.println("-----------------");
         System.out.println("Temps d'execution : " + (System.currentTimeMillis() - startTime) + " ms");
         System.out.println("Nombre de noeuds : " + planner.getNombresNoeuds());

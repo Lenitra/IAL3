@@ -62,7 +62,11 @@ public class BWVariable {
         }
 
         for (int i = 0; i < nbBlocks; i++) {
-            Variable var = new Variable("On"+i, onDomain);
+            // make a copy of the domain
+            Set<Object> onDomainCopy = new HashSet<>(onDomain);
+            // remove the current block from the domain
+            onDomainCopy.remove(i);
+            Variable var = new Variable("On"+i, onDomainCopy);
             onbV.add(var);
         }
     }
