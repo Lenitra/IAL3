@@ -146,6 +146,7 @@ public class Main {
         return map;
     }
 
+    
     public static void main(String[] args) {
 
         Map<Variable, Object> initialState = new HashMap<>();
