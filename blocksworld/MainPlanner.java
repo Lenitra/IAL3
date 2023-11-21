@@ -77,11 +77,11 @@ public class MainPlanner {
         planner.getInitialState();
         planner.getGoal();
         planner.plan();
-        // System.out.println("Etat initial : " + planner.getInitialState());
-        // System.out.println("-----------------");
-        // System.out.println("Etat final : " + planner.getGoal().toString());
-        // System.out.println("-----------------");
-        // System.out.println("Plan : " + planner.plan());
+        System.out.println("Etat initial : " + planner.getInitialState());
+        System.out.println("-----------------");
+        System.out.println("Etat final : " + planner.getGoal().toString());
+        System.out.println("-----------------");
+        System.out.println("Plan : " + planner.plan());
         System.out.println("-----------------");
         System.out.println("Temps d'execution : " + (System.currentTimeMillis() - startTime) + " ms");
         System.out.println("Nombre de noeuds : " + planner.getNombresNoeuds());

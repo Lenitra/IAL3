@@ -20,7 +20,7 @@ public class MainSatisfaction {
         BWConstraintes bw = new BWConstraintes(8, 3);
         bw.allConstraints();
         System.out.println(" ################# TEST Contraintes #################");
-        // TestSolverBlocksworld(bw);
+        TestSolverBlocksworld(bw);
 
         BWConstraintesCroissant bw2 = new BWConstraintesCroissant(10, 4);
         bw2.allConstraints();
@@ -30,7 +30,7 @@ public class MainSatisfaction {
         BWRegularyConstraintes bw3 = new BWRegularyConstraintes(10, 4);
         bw3.allConstraints();
         System.out.println(" ################# TEST Contraintes Régulières #################");
-        // TestSolverBlocksworld(bw3);
+        TestSolverBlocksworld(bw3);
     }
 
 
