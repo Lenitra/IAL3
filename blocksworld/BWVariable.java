@@ -100,5 +100,9 @@ public class BWVariable {
         return "{ nbBlocks=" + nbBlocks + ", pile=" + nbBlocks + ", variables=" + var + '}';
     }
 
+    public Object getPile() {
+        return nbPiles;
+    }
+
 
 }
