@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
@@ -21,12 +20,6 @@ import bwmodel.BWStateBuilder;
 import bwui.BWComponent;
 import bwui.BWIntegerGUI;
 
-
-/**
- * Class for realising the view representing
- * the state of the block world.
- * Make use of library blocksworld
- */
 public class Main {
 
     private BWVariable bwV;
@@ -36,9 +29,9 @@ public class Main {
     /**
      * Constructor
      * 
-     * @param bwV   : reference to block world variables
-     * @param state : the actual state
-     * @param title : frame title
+     * @param bwV   : Variables du block world
+     * @param state : Etat initial
+     * @param title : Titre de la fenêtre
      */
     public Main(BWVariable bwV, Map<Variable, Object> state, String title) {
         this.bwV = bwV;
@@ -60,7 +53,7 @@ public class Main {
     }
 
     /**
-     * Method displaying a given state
+     * Méthode appelée pour afficher la simulation d'un état
      */
     public void display(int x, int y) {
         int numberOfOnb = bwV.getOnb().size();
@@ -76,14 +69,14 @@ public class Main {
     }
 
     /**
-     * Method the displaying the execution of a plan
+     * Méthode appelée pour afficher la simulation d'un plan
      * 
      * @param actions : the plan
      */
     public void displayPlan(List<Action> actions) {
         int numberOfOnb = bwV.getOnb().size();
         BWIntegerGUI gui = new BWIntegerGUI(numberOfOnb);
-        JFrame frame = new JFrame("BLOCK WORLD");
+        JFrame frame = new JFrame(title);
         frame.setPreferredSize(new Dimension(500, 500));
         BWState<Integer> bwState = makeBwState();
         BWComponent<Integer> component = gui.getComponent(bwState);
@@ -103,23 +96,26 @@ public class Main {
         System.out.println("Fin de simulation");
     }
 
-
-
+    /**
+     * Méthode qui permet de transformer une liste de liste d'entiers en une map de
+     * variables et d'objets
+     * 
+     * @param state : l'état à transformer
+     * @return la map de variables et d'objets
+     */
     public static Map<Variable, Object> fromListListToMapVarObj(List<List<Integer>> state) {
         Map<Variable, Object> map = new HashMap<>();
-        
+
         List<Integer> domaineOn = new ArrayList<>();
         for (int i = 0; i < state.size(); i++) {
             domaineOn.add(-i - 1);
         }
 
-
-
         for (int i = 0; i < state.size(); i++) {
-            if(state.get(i).isEmpty()){
-                map.put(new BooleanVariable("Fr" + (i+1)), true);
+            if (state.get(i).isEmpty()) {
+                map.put(new BooleanVariable("Fr" + (i + 1)), true);
             } else {
-                map.put(new BooleanVariable("Fr" + (i+1)), false);
+                map.put(new BooleanVariable("Fr" + (i + 1)), false);
             }
 
             domaineOn.add(-i - 1);
@@ -150,51 +146,49 @@ public class Main {
         return map;
     }
 
-
-
-
-
-
     public static void main(String[] args) {
 
         Map<Variable, Object> initialState = new HashMap<>();
         Map<Variable, Object> goalState = new HashMap<>();
+
+        /*
+         * 
+         * VARIABLES
+         * 
+         */
+
         int nbBlocks = 3;
         int nbPiles = 3;
-
 
         // Création de l'état initial
         // [0 , 2]
         // [1]
         // []
         List<List<Integer>> initialStateList = List.of(
-            List.of(0, 2), 
-            List.of(1), 
-            List.of()
-        );
-        initialState = fromListListToMapVarObj(initialStateList);
-
-
+                List.of(0, 2),
+                List.of(1),
+                List.of());
 
         // Création du goal
         // [2, 1, 0]
         // []
         // []
+        List<List<Integer>> goalStateList = List.of(
+                List.of(2, 1, 0),
+                List.of(),
+                List.of());
 
-        List<List<Integer>> goalStateList = List.of(List.of(2, 1, 0), List.of(), List.of());
+
+
+        initialState = fromListListToMapVarObj(initialStateList);
         goalState = fromListListToMapVarObj(goalStateList);
         Goal goal = new BasicGoal(goalState);
 
-
-
-
-
-        //on va tester dfs et bfs avec un etat initial et un etat final
+        // on va tester dfs et bfs avec un etat initial et un etat final
         BWActions bwActions = new BWActions(nbBlocks, nbPiles);
         Set<Action> actions = bwActions.getActions();
 
-        
-        //on va tester dfs et bfs avec un etat initial et un etat final
+        // initialisation des planificateurs
         Planner dfs = new DFSPlanner(initialState, actions, goal);
 
         Planner bfs = new BFSPlanner(initialState, actions, goal);
@@ -203,18 +197,14 @@ public class Main {
 
         HeuristicNombreBlocksMalPlaces HeurisNBMP = new HeuristicNombreBlocksMalPlaces(goalState);
         Planner astar = new AStarPlanner(initialState, actions, goal, HeurisNBMP);
-    
-
 
         BWVariable bwV = new BWVariable(nbBlocks, nbPiles);
-        
 
         // Création d'une instance de Main
-        // Création d'une instance de Main
-        Main mainView = new Main(bwV, initialState, "Blocksworld Simulation");
+        Main mainView = new Main(bwV, initialState, "Blocksworld Simulator");
 
         // Choix du planificateur à utiliser pour la simulation
-        Planner planner = dfs; // ou autre planificateur
+        Planner planner = astar; // ou autre planificateur
 
         // Génération du plan
         List<Action> plan = planner.plan();
