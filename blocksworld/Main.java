@@ -1,18 +1,26 @@
 package blocksworld;
 
-import java.awt.Dimension;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import modelling.*;
+import planning.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
+
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
+
 import bwmodel.BWState;
 import bwmodel.BWStateBuilder;
 import bwui.BWComponent;
 import bwui.BWIntegerGUI;
-import planning.*;
-import modelling.*;
+
 
 /**
  * Class for realising the view representing
@@ -96,43 +104,95 @@ public class Main {
     }
 
 
+
+    public static Map<Variable, Object> fromListListToMapVarObj(List<List<Integer>> state) {
+        Map<Variable, Object> map = new HashMap<>();
+        
+        List<Integer> domaineOn = new ArrayList<>();
+        for (int i = 0; i < state.size(); i++) {
+            domaineOn.add(-i - 1);
+        }
+
+
+
+        for (int i = 0; i < state.size(); i++) {
+            if(state.get(i).isEmpty()){
+                map.put(new BooleanVariable("Fr" + (i+1)), true);
+            } else {
+                map.put(new BooleanVariable("Fr" + (i+1)), false);
+            }
+
+            domaineOn.add(-i - 1);
+
+            for (int j = 0; j < state.get(i).size(); j++) {
+                domaineOn.add(state.get(i).get(j));
+            }
+
+            for (int j = 0; j < state.get(i).size(); j++) {
+                Set<Object> domaineOnCopy = new HashSet<>(domaineOn);
+                domaineOnCopy.remove(Integer.valueOf(state.get(i).get(j)));
+
+                if (j == 0) {
+
+                    map.put(new Variable("On" + state.get(i).get(j), domaineOnCopy), -i - 1);
+                } else {
+                    map.put(new Variable("On" + state.get(i).get(j), domaineOnCopy), state.get(i).get(j - 1));
+                }
+
+                if (j == state.get(i).size() - 1) {
+                    map.put(new BooleanVariable("Fi" + state.get(i).get(j)), false);
+                } else {
+                    map.put(new BooleanVariable("Fi" + state.get(i).get(j)), true);
+                }
+            }
+        }
+
+        return map;
+    }
+
+
+
+
+
+
     public static void main(String[] args) {
+
         Map<Variable, Object> initialState = new HashMap<>();
         Map<Variable, Object> goalState = new HashMap<>();
-        
+        int nbBlocks = 3;
+        int nbPiles = 3;
+
+
         // Création de l'état initial
         // [0 , 2]
         // [1]
-        initialState.put(new Variable("On0", Set.of(-1, -2,-3, 1, 2)), -1);
-        initialState.put(new Variable("On1", Set.of(-1, -2,-3, 0, 2)), -2);
-        initialState.put(new Variable("On2", Set.of(-1, -2,-3, 0, 1)), 0);
-        initialState.put(new BooleanVariable("Fi0"),true);
-        initialState.put(new BooleanVariable("Fi1"),false);
-        initialState.put(new BooleanVariable("Fi2"),false);
-        initialState.put(new BooleanVariable("Fr1"),false);
-        initialState.put(new BooleanVariable("Fr2"),false);
-        initialState.put(new BooleanVariable("Fr3"),true);
+        // []
+        List<List<Integer>> initialStateList = List.of(
+            List.of(0, 2), 
+            List.of(1), 
+            List.of()
+        );
+        initialState = fromListListToMapVarObj(initialStateList);
+
 
 
         // Création du goal
-        //[]
-        //[]
-        //[2, 1, 0]
-        goalState.put(new Variable("On2", Set.of(-1)),-3);
-        goalState.put(new Variable("On1", Set.of(-2)), 2);
-        goalState.put(new Variable("On0", Set.of(1)), 1);
-        goalState.put(new BooleanVariable("Fi0"),false);
-        goalState.put(new BooleanVariable("Fi1"),true);
-        goalState.put(new BooleanVariable("Fi2"),true);
-        goalState.put(new BooleanVariable("Fr1"),true);
-        goalState.put(new BooleanVariable("Fr2"),true);
-        goalState.put(new BooleanVariable("Fr3"),false);
+        // [2, 1, 0]
+        // []
+        // []
 
+        List<List<Integer>> goalStateList = List.of(List.of(2, 1, 0), List.of(), List.of());
+        goalState = fromListListToMapVarObj(goalStateList);
         Goal goal = new BasicGoal(goalState);
 
+
+
+
+
         //on va tester dfs et bfs avec un etat initial et un etat final
-        BWActions bwActions = new BWActions(3,3);
+        BWActions bwActions = new BWActions(nbBlocks, nbPiles);
         Set<Action> actions = bwActions.getActions();
+
         
         //on va tester dfs et bfs avec un etat initial et un etat final
         Planner dfs = new DFSPlanner(initialState, actions, goal);
@@ -146,21 +206,26 @@ public class Main {
     
 
 
-        // COMPLETER ICI pour ouvir une fenetre et afficher l'état initial
-    BWVariable bwV = new BWVariable(3, 3);
-    
+        BWVariable bwV = new BWVariable(nbBlocks, nbPiles);
+        
 
-    // Création d'une instance de Main
-    Main mainView = new Main(bwV, initialState, "");
+        // Création d'une instance de Main
+        // Création d'une instance de Main
+        Main mainView = new Main(bwV, initialState, "Blocksworld Simulation");
 
-    // Choix du planificateur à utiliser pour la simulation
-    Planner planner = djikstra; // Par exemple, on peut choisir AStarPlanner ici
+        // Choix du planificateur à utiliser pour la simulation
+        Planner planner = dfs; // ou autre planificateur
 
-    // Génération du plan
-    List<Action> plan = planner.plan();
+        // Génération du plan
+        List<Action> plan = planner.plan();
 
-    // Affichage de la simulation du plan
-    mainView.displayPlan(plan);
+        // Vérification que le plan n'est pas null et contient des actions
+        if (plan != null && !plan.isEmpty()) {
+            // Affichage de la simulation du plan
+            mainView.displayPlan(plan);
+        } else {
+            System.out.println("Le plan n'a pas pu être généré ou est vide.");
+        }
 
     }
 
